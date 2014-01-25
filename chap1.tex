@@ -44,7 +44,7 @@ Each part of the class will be an oportunity to visit a general class of numeric
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\chapter{Inverse geometry}
+\part{Inverse geometry}
 
 We mainly consider in the part open kinematic chain, that is to say a tree of rigid bodies attached two by two by joints. Recall that the configuration space of the robot is a representation (desirably minimal) that uniquely defined the position of all the bodies of the robot. Before discussing the robot geometry, it is important to introduce the concept to manipulate a body in space. The correct structure to do so is the special Euclidean group $SE(3)$, which is described in \refsec{se3}.
 
@@ -57,9 +57,9 @@ Alternatively, numerical methods can be used to solve the problem in the general
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\section{Special Euclidean Group} \label{sec:se3}
+\chapter{Special Euclidean Group} \label{sec:se3}
 
-\subsection{Euclidean space $\mathbb{E}^3$}
+\section{Euclidean space $\mathbb{E}^3$}
 
 We consider the three-dimensional Euclidean space  $\mathbb{E}^3$. The Euclidean structure is totaly defined by selecting a representation $\mathbb{E}^3$, by selecting a coordinate frame, \mie an origin $\mathcal{O}$ and three independant direction $e_1,e_2,e_3$. In that case, any point $p \in \mathbb{E}^3$ can be identified with a vector $\mbf{p} \in \mathbb{R}^3$ which represents it:
 \[ p \repr \mbf{p} = \BIN x \\ y \\ z \BOUT \in \mathbb{R}^3 \] 
@@ -81,9 +81,9 @@ The set $SE(3)$ equiped with the composition of application is a group (\mie the
 In the remaining, we will define some possible representations of $SE(3)$, \mie some vector spaces that surjectively maps $SE(3)$.
 
 
-\subsection{Rotation $SO(3)$}
+\section{Rotation $SO(3)$}
 
-\subsubsection{Matrix representation}
+\subsection{Matrix representation}
 We start with the subset of $SE(3)$ that keeps the origin fixed. This set is denoted $SO(3)$ for special orthogonal group. 
 \[ SO(3) \triangleq \Big\{ g : \mathbb{E}^3 \rightarrow \mathbb{E}^3, \textrm{ so that } \forall x,y \in \mathbb{E}^3, || g(x) - g(y) || = ||x - y|| \textrm{ and } g(0) = 0 \Big\} \]
 It can be shown that any elements $r$ of $SO(3)$ is a linear application in $\mbf{R}^3$: $SO(3)$ is a subgroup of the group of linear applications on $\mathbb{R}^3$ denoted by $GL(3)$. Any element of $SO(3)$ can then be represented by its action on the canonical basis, \mie its matrix in $\mathbf{R}^{3\times 3}$.
@@ -96,7 +96,7 @@ This defines six constraints, that can be summarized by
 where $R = [ r(e_1) r(e_2) r(e_3) ]$ is the matrix representation of $r$. In addition, since the orientation (cross product) is preserved, we also have the positivity of the determinant, \mie:
 \[ det(R) = +1\]
 
-\subsubsection{Angular velocities $\mathfrak{so}(3)$}
+\subsection{Angular velocities $\mathfrak{so}(3)$}
 
 Consider now a curve $r(t)$ in $SO(3)$ represented by $R(t)$ in $\mathbb{R}^{3\times3}$. By derivation of \eq{eq:rtr}, we have that:
 \[ \dot{R}(t) R(t)^T = - ( \dot{R}(t) R(t)^T )^T \]
@@ -114,7 +114,7 @@ It is easy to prove that the exponential satisfies the differential equation, an
 
 From the differential construction, we obtain that $e^{t \hat w}$ is a rotation matrix. This property can also be proved directly, by verifying that ${e^{t \hat w}}^T e^{t \hat w} = I$ using the power serie, and by showing that $det(e^{t \hat w})=1$ by continuity from $det(e^0)=1$.
 
-\subsubsection{Rodrigues's formula}
+\subsection{Rodrigues's formula}
 
 The infinite power serie of the exponential map easily reduces to a simple formula using the simple structure of $\mathfrak{so}(3)$. Indeed, we have the two following properties:
 \[ \hat{w}^2 = ww^T - I_3 \textrm{ and } \hat{w}^3 = -\hat{w} \]
@@ -128,7 +128,7 @@ The exponential map is an application from $\mathfrak{so}(3)$ to $SO(3)$:
 The cases studied above is only decoupled expression, $w$ being the direction and $t$ the magnitude of the rotation. From the Rodrigues's formulat, we directly see that the exponential is not injective, since the norm can be chosen modulo $2\pi$.
 
 
-\subsubsection{Canonical exponential coordinates}
+\subsection{Canonical exponential coordinates}
 
 The exponential map from $\mathfrak{so}(3)$ generates rotation matrices. It can be shown that the map generates all the group $SO(3)$, that is to say that it is surjective (onto). This is done by building the reciprocal, called the logarithm map. Being given a rotation matrix $R$ with $r_{ij}$ its components, the logarithm is defined by:
 \[ log : R\in SO(3) \rightarrow w \in \mathfrak{so}(3) \]
@@ -141,16 +141,16 @@ Compared to the representation using rotation matrix, of dimension $9$ but with 
 Intuitively, the coordinates $w = \theta u$ with $\theta = || w ||$ and $u = \frac{1}{\theta} w$ corresponds to the integration of an unitary rotation velocity during a time $\theta$, or said differently to a rotation of an angle $\theta$ around the direction $u$. It corresponds to the older results that any rotation of a solid in space can be brought back to a pure rotation around a particular axis. The coordinates are also named ``angle vector'' or ``u theta'' for this reason.
 
 
-\subsection{General overview: standard Lie Group representation}
+\section{General overview: standard Lie Group representation}
 
 The definition of the canonical coordinates seems pretty artificial, since we had to introduce a complex map coming from an arbitrary differential equation. In fact, the process to obtain the parametrization is coming from the very topological structure of the group. The same process can be used for obtaining usefull parametrization on similar topologies. We make here a brief overview of the topological tools that where used, in the general case.
 
-\subsubsection{Differential manifold}
+\subsection{Differential manifold}
 A differential manifold $\mathcal{M}$ is a set that is locally diffeomorphic to a vector space $\mathbb{R}^n$, that is to say, in any point $x \in \mathcal{M}$, there exists a local neighborhood $\mathcal{U}$ of $x$ with a diffeorphism $\psi$ from $\mathcal{U}$ to a neighborhood of $0_n$ in $\mathbb{R}^n$. A collection of $\mathcal{U},\phi$ covering $\mathcal{M}$ is called an atlas of $\mathcal{M}$. Each $\phi$ is called a local coordinates system. We consider here only cases where all the atlas are equivalent, \mie the diffemorphism are kept from one local coordinates system to the other.
 
 Intuitivelly, a differentiable manifold is a set that locally behaves like $\mathbb{R}^n$.
 
-\subsubsection{Tangent space}
+\subsection{Tangent space}
 On each point $p$ of a differential manifold $\mathcal{M}$ we write $C^\infty(p)$ the set of all smooth function from any neighborhood of $p$ into $\mathbb{R}$. The tangent space $T_p(\mathcal{M})$ is the subset of linear form over $C^\infty(p)$ satisfying the ``derivation'' Leibniz rule, \mie:
 \EAIN
 T_p(\mathcal{M}) \triangleq \Big\{ &X_p : f \in C^\infty(p) \rightarrow \mathbb{R},  \\ & \forall f,g \in C^\infty(p), \alpha \in \mathbb{R}, X_p(\alpha f + g ) = \alpha X_p(f) +X_p(g) \\ &\textrm{ and } X_p(fg) = X_p(f)g + f X_p(g) \Big\} \EAOUT
@@ -161,7 +161,7 @@ The tangent space is a linear space. A basis can be built from the canonical bas
 A vector field $X$ is simply the association of a vector of the tangent space to any point of the manifold:
 \[ X: p \in \mathcal{M} \rightarrow X_p \in T_p \mathcal{M} \]
 
-\subsubsection{Lie group and algebra}
+\subsection{Lie group and algebra}
 
 A Lie group $\mathcal{G}$ is a differential manifold with a smooth group operation and inverse.  The neutral element  of the group is denoted by $1_\mathcal{G}$.
 \newline\emph{In the case of spatial rotation, the Lie group is $SO(3)$}. \medskip
@@ -179,11 +179,11 @@ The exponential map is a diffeomorphism from a neighborhood of $0_\mathfrak{g}$ 
 
 Moreover, if $\mathcal{G}$ is compact, the exponential map is surjective. In that case, the exponential map defines a global coordinate system, inherited from the vector space structure of $\mathfrak{g}$. It is called the canonical exponential coordinates.
 
-\subsection{The exponential map is not everything}
+\section{The exponential map is not everything}
 
 Despite the topological origin, the exponential coordinates do not keep the topology of the initial space. In particular, the exponential map is not injective in general, which means that several coordinates correspond to one same point. Typically for $SO(3)$, the exponential coordinates are defined modulo $2 \pi$ and does not keep the symmetry of the group with a singularity in the neighborghood of the null rotation $I_3$ (the direction being degenerated when the angle is becoming null).
 
-\subsubsection{Euler angles}
+\subsection{Euler angles}
 Other representation of $SO(3)$ exists. The first to be known are the Euler angle, which corresponds to a sequence of three elementary rotations of angle $a_i$, $i=1..3$, around three axes. Two types can be distinguished: the first when the rotations are performed around fixed axes. They can be written using the exponential map by:
 \[ r(a_1,a_2,a_3) = e^{a_1 \hat{w_1}} e^{a_2 \hat{w_2}} e^{a_3\hat{w_3}} \]
 where $w_i$, $i=1..3$ are three rotation axis.
@@ -193,7 +193,7 @@ Note by the way that $e^{\hat w_1 + \hat w_2} \neq e^{\hat w_1}e^{\hat w_2}$ exc
 
 The most used rotation are the roll-pitch-yaw. It corresponds to the rotation of the first type, with $w_3 = (1,0,0)$ (roll, around the $X$ axis), $w_2 = (0,1,0)$ (pitch, around the $Y$ axis) and $w_1 = (0,0,1)$ (yaw, around the $Z$ axis). These angles are much used in the aerospace industry.
 
-\subsubsection{Quaternions}
+\subsection{Quaternions}
 
 The quaternion are a way to get rid of the singularity of the exponential coordinates in 0 and of their non surjectivity modulo $2\pi$. Geometrically, the normalized quaternions correspond to the sphere $\mathbb{S}^3$ which is a submanifold of $\mathbb{R}^3$, while keeping the same topology than $\mathbb{S}^2$ for $\mathbb{R}^2$. They are defined from the complex numers $\mathbb{C}$ exactly like the complex numbers are defined from $\mathbb{R}$ using $\mathbb{C} = \mathbb{R} + \mathbb{R}i $, with $i^2 = -1$. We define the imaginery number $j$ such that $j^2 = -1$ and $ij = -ji$. By convenience, we denote by $k = ij$, that has the properties that $k^2=-1$, $jk = i$ and $ki=j$. The quaternion space $\mathbb{H}$ is then defined by:
 \[ \mathbb{H} = \mathbb{C} + \mathbb{C} j 
@@ -214,17 +214,17 @@ The reciprocal in the proper subspace of $\mathfrak{so}(3)$ is:
 \quad u = \left\{  \begin{array}{ll} 0, & \theta = 0, \\ \frac{1}{sin(\theta/2)} q_{1:3} & \theta \neq 0 \end{array}\right. \]
 with $q_{1:3} = (q_1,q_2,q_3)$. The conditional equality depending of $\theta=0$ corresponds to the singularity of $\mathfrak{so}(3)$ around the zero rotation. Moreover, we can notice that both $q$ and $-q$ produce the same rotation. $SO(3)$ in fact corresponds topologically of the half sphere or projection plane $RP^3$.
 
-\subsubsection{Summary of rotation representations}
+\subsection{Summary of rotation representations}
 The quaternion representation is of dimension $4$ with one constraint ($||q||=1$). It is therefore not minimal. However, it more adequatly captures the topology of $SO(3)$. In addition, it is equiped with a composition law corresponding to the composition of rotation, while being cheaper to compute numerically. Finally, the action of the linear map $q \repr r \in SO(3)$ on any $v \in \mathbb{R}^3$ can be computed directly from the quaternion using:
 $ r(v) = q \tilde{v} q  $
 where $\tilde v = v_1 i + v_2 j + v_3 k$. In many situations, the quaternions are the most adapted representation of $SO(3)$. The exponential coordinates have to be chosen when minimality is crucial, while $\mathbb{R}^{3\times3}$ might be more interesting when many vector multiplications are computed (typically when rotating a cloud of thousand of points).
 
-\subsection{Rigid displacement $SE(3)$}
+\section{Rigid displacement $SE(3)$}
 
 We now come back to the initial $SE(3)$ group, the set of all application in $\mathbb{E}^3$ that preserves the distance and the orientation. $SE(3)$ can be shown to be the composition of a pure rotation $r \in SO(3)$ and a pure translation $t \in \mathbb{R}^3$:
 \[ SE(3) = \mathbb{R}^3 \times SO(3) = \{ (r,t), r\in SO(3), t \in \mathbb{R}^3 \} \]
 
-\subsubsection{Homogeneous matrix representation}
+\subsection{Homogeneous matrix representation}
 Denoting by $m \repr (r,t)$ a rigid motion of $SE(3)$, its application on a point $p \in \mathbb{E}^3$ is:
 \[ m(p) = r(p) + t \]
 The application $m$ is therefore affine in $\mathbb{R}^3$. In can be transformed for convenient to a linear map to the cost of embeded it in the larger space $GL(4) \repr \mathbb{R}^{4\times4}$ by:
@@ -239,7 +239,7 @@ The matrix product fits to the composition operation of $SE(3)$, providing direc
 \[ M^{-1} = \BIN R^T & -R^T p \\ 0 & 1 \BOUT \]
 \end{itemize}
 
-\subsubsection{Pose-u-theta coordinates}
+\subsection{Pose-u-theta coordinates}
 
 Like for $SO(3)$, the matrix representation of $SE(3)$ is convenient but not minimal: 16 components are necessary but are subject to 7 constraints, three for the $R$ part and 4 for the last row (these 4 last components are indeed trivial). Moreover, it is more convenient to express the coordinates as a vector space $\mathbb{R}^n$ ($n$ being intuitively equal to 6), where the neutral element is $0_n$ and where the group topology is closer to $\mathbb{R}$ than $GL(4)$.
 
@@ -247,7 +247,7 @@ Using the canonical exponential coordinates of $SO(3)$, we can directly propose 
 \[ m = (r,p) \repr \BIN p \\ w \BOUT \]
 where $r \repr w$ is the exponential representation of the rotation part of $m \in SE(3)$. Like $\mathfrak{so}(3)$, this coordinates system has no group structure that fits the topology of $SE(3)$.
 
-\subsubsection{Exponential coordinates}
+\subsection{Exponential coordinates}
 
 This intuitive coordinates system is close to be the exponential coordinates of $SE(3)$ but is not exactly it. This means that their derivative does not fit with the tangent space to $SE(3)$, \mie to the velocity of rigid bodies. To obtain the exponential coordinates of $SE(3)$, the procedure is similar to the one performed in $SO(3)$. 
 
@@ -272,30 +272,30 @@ The exponential map is sujective into $SE(3)$. The inclusion of its image in $SE
 \[ log: m = (r,p) \rightarrow (w, v) \]
 with $w=log(r)$, $v = p$ when $||w||=0$ and $v = ||w|| \Big( ww^T + (I-e^w)\hat{w} \Big)^{-1} p$ otherwise.
 
-\subsubsection{Movement of coordinates system in $SE(3)$}
+\subsection{Movement of coordinates system in $SE(3)$}
 
 Any rigid movement $m \in SE(3)$ displaces a coordinates system of $\mathbb{E}^3$ (\mie a point $\mathcal{O} \in \mathbb{E}^3$ and three orthonormal vectors of $\mathbb{R}^3$) into another coordinates system. Consider two coordinates systems of $\mathbb{E}^3$ denoted by their frames $\mathcal{F}_a$ and  $\mathcal{F}_b$. The coordinates of a point $p\in \mathbb{E}^3$ are denoted by $^ap$ in $\mathcal{F}_a$ and by $^bp$ in $\mathcal{F}_b$. We denote by $^am_b \repr \leftidx{^a}{M}{_b} \in \mathbb{R}^{4\times4}$ the rigid motion displacing the frame $\mathcal{F}_a$ into the frame  $\mathcal{F}_b$. In that case, we have:
 \[ ^ap = \leftidx{^a}{M}{_b} \leftidx{^b}{p}{} \]
 The notation follows the tensor notations. 
 
-Consider now a fixed inertial frame $\mathcal{F_o}$ and a body frame $\mathcal{F}_b$ attached to a moving rigid object, such that the two frames match at $t=0$. The  timeof the rigid body position of any point $p$ through time can be described by only giving the trajectory $^om_b(t)$ in $SE(3)$:
-\[ o^p(t)  = \leftidx{^o}{M}{_b}(t) p_b\]
+Consider now a fixed inertial frame $\mathcal{F_o}$ and a body frame $\mathcal{F}_b$ attached to a moving rigid object, such that the two frames match at $t=0$. The  position of any point $p$ attached to the rigid body through the time can be described by only giving the trajectory $^om_b(t)$ in $SE(3)$:
+\[ ^op(t)  = \leftidx{^o}{M}{_b}(t) p_b\]
 where $p_b = p_b(0)$ are the coordinates of the fixed position of the point $p$ in the body frame.
 
 We say the $^om_b$ is the placement (\mie position and orientation) of the body $b$ in the coordinates system $o$.
 
-\subsection{A first taste of rigid velocities}
+\section{A first taste of rigid velocities}
 
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\section{Direct geometry} \label{sec:directgeom}
+\chapter{Direct geometry} \label{sec:directgeom}
 
 In the previous section, we have seen how rigid displacements can be represented. We now consider a more complex class of movements: the articulated rigid motion, \mie the considered system is composed of a finite set of rigid elements, each of them moving subject to some given  constraints imposed by the joints linking them. We consider here only the case of open kinematic chain (properly describe below described) and will discuss only quickly the case of kinematic loops later.  Like for $SE(3)$, we will discuss here the possible solution to numerically represent the motion of such systems and to compute the motion (position, velocities, etc) of each points of the system.
 
 The most difficult part of the study has been done with $SE(3)$. This section is thus notably shorter.
 
-\subsection{Kinematic tree}
+\section{Kinematic tree}
 
 We consider the graph structure describing the links between each rigid body: each node of the graph represents one rigid body and the edges of the graph represents the joints connecting two bodies together. A body can be connected to several other bodies through several joints. It is not connected to itself and only connected once to any other. Open kinematic chains are those for which there is no loops in the graph, \mie it is possible to selec a tree structure for the kinematic graph. Simple kinematic chain are reduced to a trivial tree (only one branch, each node has only one son and one father at maximum).
 
@@ -304,43 +304,43 @@ Both case are similar in the sense that a free-flyer robot can be seen as attach
 
 In the following, we take the first convention: the base link is fixed, and a free-flyer robot is obtained by adding an artificial ``free-flyer'' link.
 
-\subsection{Bodies}
+\section{Bodies}
 
 Each body, represented by a node of the graph, is a rigid set of points. The body is associated with a body coordinates system, into which any point is described by a constant vector of $\mathbb{R}^3$. 
 
-\subsection{Joints}
+\section{Joints}
 
-The joints are the moving pieces of the articulated rigid body. Each joint is attached two joints, one being the father $i$ and the second the son $i+1$. In general, the configuration $q_i$ of a joint is an element of a differentable manifold $\mathcal{Q_i}$ that uniquely defines the placement of the son body in the coordinates system of the father body:
-\[ K_i: q_i \in \mathcal{Q_i} \rightarrow \leftidx{^a}{m}{_b}(q) \in SE(3) \]
-For convenience, we generally rather consider a class of joint, caracterized by their $K_i : \mathcal{Q_i} \rightarrow SE(3)$ function. The joint linking body $i$ to body $i+1$ is then defined by its placement in the system $i$ along with its kinematic function $K_i$.
+The joints are the moving pieces of the articulated rigid body. Each joint is attached two joints, one being the father $i$ and the second the son $i+1$. In general, the configuration $q_i$ of a joint is an element of a differentable manifold $\mathcal{Q}_i$ that uniquely defines the placement of the son body in the coordinates system of the father body:
+\[ K_i: q_i \in \mathcal{Q}_i \rightarrow \leftidx{^a}{m}{_b}(q) \in SE(3) \]
+For convenience, we generally rather consider a class of joint, caracterized by their $K_i : \mathcal{Q}_i \rightarrow SE(3)$ function. The joint linking body $i$ to body $i+1$ is then defined by its placement in the system $i$ along with its kinematic function $K_i$.
 
-In all the relevant cases, $K_i$ is a smooth function and $Q_i$ a compact Lie group. It is therefore possible to associate a global vector representation to $Q_i$ and a Jacobian matrix to the tangent application to $K_i$. The standard position of the joint is given by the neutral element of the group $1_\mathcal{Q}$, expecting $K(1_\mathcal{Q}) = 1_{SE(3)}$.
+In all the relevant cases, $K_i$ is a smooth function and $\mathcal{Q}_i$ a compact Lie group. It is therefore possible to associate a global vector representation to $\mathcal{Q}_i$ and a Jacobian matrix to the tangent application to $K_i$. The standard position of the joint is given by the neutral element of the group $1_\mathcal{Q}$, expecting $K(1_\mathcal{Q}) = 1_{SE(3)}$.
 
 The relative placement of body $i+1$ in the coordinate system of body $i$ is then given by:
-\[ q_i \in \mathcal{Q_i} \rightarrow \leftidx{^i}{m}{_{i+1}}(q_i) = \leftidx{^i}{m}{_{i+1}^0} \  K_i(q_i) \]
+\[ q_i \in \mathcal{Q}_i \rightarrow \leftidx{^i}{m}{_{i+1}}(q_i) = \leftidx{^i}{m}{_{i+1}^0} \  K_i(q_i) \]
 with $\leftidx{^i}{m}{_{i+1}^0} = \leftidx{^i}{m}{_{i+1}}(1_\mathcal{Q}$ the placement of the joint in the coordinates system of body $i$.
 
 
-\subsubsection{Revolute joint}
+\subsection{Revolute joint}
 
 The most classical joint is the revolute joint: one degree of rotation around a fixed axis, typically the $Z$ axis. The configuration space of the joint is then $\mathcal{S}^1$ the unitary circle. Most of the time, the joint angle is bounded by an upper and a lower joint limit. The configuration space is then an interval of $\mathbb{R}$. The kinematic function $K$ is simply:
 \[ K_i: q \in \mathbb{S}^1 \rightarrow \BIN \cos q & -\sin q & 0 & 0 \\ \sin q & \cos q & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \BOUT \]
 
-\subsubsection{Prismatic joint}
+\subsection{Prismatic joint}
 
 Prismatic joint can translate (typically in an interval) along a given fixed axis, say $Z$. The configuration space is direcly $\mathbb{R}$. The kinematic function $K$ is trivially $K_i(q) = \big(I,(0,0,q)\big) \in SO(3)\times\mathbb{R}^3$.
 
-\subsubsection{Free-flyer joint}
+\subsection{Free-flyer joint}
 
 Free-flyer joints are configured by $SE(3)$ with their kinematic function being the identity on $SE(3)$. 
 
-\subsubsection{Other joints}
+\subsection{Other joints}
 
 Other joints can be found, even if very rarely used in robotics. Sperical joints allow free and symetrical rotations. Their configuration space is $SO(3)$, with their kinematics being $r \rightarrow (r,0_3)$. Very few efficient mechanisms exist to actuate such a joint. A similar effect is rather used by a sequence three revolute joints with concurent rotation axes. However, spherical joints are very often used for modeling purpose, for example for the model of the human body (typically, the hip joint), or for passive mechanisms.
 
 The planar joint is a free 2D motion: two translations, one rotation. Its configuration space is $SE(2)$. The cylindric and helicoidal joints are a composition of on translation and one rotation with shared axis, the first one with free , the second with coupled rotation and translation motions.
 
-\subsection{Configuration space}
+\section{Configuration space}
 
 The configuration space of the robot is typically the result of the Cartesian product of the configuration space of all the joints. Its reprensation is the cartesian product of the representation of the joint configuration spaces. The order of the terms in the Cartesian product only matters for the representation of the configuration space. It is purely arbitrary.
 In the case of a simple kinematic chain, the only relevant order is the one given by the chain.
@@ -349,7 +349,7 @@ For kinematic trees, the selected order should be compatible by the implicite pa
 
 When only minimal vector representation of the $\mathcal{Q}_i$ are used, a minimal vector representation of $\mathcal{Q}$ is obtained. The dimension of the vector $q$ is equal to the dimension of the manifold $\mathcal{Q}$.
 
-\subsection{Direct geometry function}
+\section{Direct geometry function}
 
 We called the end effector of the robot one of the body of arbitrary importance (typically the one carrying the tool). 
 For all this part, we can consider only simple chain without significant loss of generality. In that case, the end effector is the last body of the chain.
@@ -368,7 +368,7 @@ The notion of end effector is arbitrary. In particular, the end effector can be 
 
 In the case of kinematic trees, several direct geometry functions are defined for each end effector attached to the end of each leaf of the tree.
 
-\subsection{Denavit-Hartenberg parametrization}
+\section{Denavit-Hartenberg parametrization}
 
 The Denavit-Hartenberg method is a minimal parametrization of a revolute-prismatic kinematics chain. It is used to minimaly describe the relative joint placements $\leftidx{^{i}}{m}{_{i+1}^0}$. This parametrization was a de facto standard 10 years ago and is still often used (even if, now, the $SE(3)$ displacement is generally encoded directly using a standard representation).
 
@@ -376,7 +376,7 @@ Indeed, the static displacement $\leftidx{^{i}}{m}{_{i+1}^0}$ requires at least 
 
 The detail of how the static displacement can be computed from the Denavit-Hartenberg parameters can be found in [Murray93].
 
-\subsection{Workspace}
+\section{Workspace}
 
 The workspace $\mathcal{W}$ of the robot is the image space of the direct geometry function, \mie:
 \[ \mathcal{W} = \Big\{ m \in SE(3), \textrm{ so that } \exists q \in \mathcal{Q}, K(q) = m \Big\} \]
@@ -386,7 +386,7 @@ In general, $\mathcal{W}$ is a compact non-convex subset of $SE(3)$. Its border 
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\section{Analytical inverse geometry} \label{sec:anainvgeom}
+\chapter{Analytical inverse geometry} \label{sec:anainvgeom}
 
 The direct geometry maps the configuration space to the placement of the end effector. The map is in general not injective (several configuration corresponds to the same placement) and definitely not surjective: the robot workspace is not the entire world. However, programming a robot often comes back to placing its end effector to a given reference. The inverse geometry problem is defined by: given a reference placement in $SE(3)$, find one or all the configurations that matches this reference. The inverse maps $K^+$ the workspace to some non-empty  possibly non-trivial subset of the configuration space:
 \[ K^+: m \in \mathcal{W} \rightarrow K^+(m) \subset \mathcal{Q} \]
@@ -395,11 +395,11 @@ The typicaly case of study is the non-redundant case: consider a robot with six 
 
 In general, we do not know how to compute the inverse map explicitely. This was the subject of very extensive works of research in the 90's, that produce some efficient solutions in the case of non-redundant robot manipulator  $6 \times 6$ problem. These approaches where then extended to similar case, like in the case of one degree of redundancy (7 joints, 6 placement constraints).
 
-\subsection{Overview of the possible methods}
+\section{Overview of the possible methods}
 
 The following description of the state of the art is taken from Juan Cort\`es PhD thesis [Cortes03].
 
-\subsubsection{Substitution: geometrical view}
+\subsection{Substitution: geometrical view}
 
 In most industrial applications, mechanisms are normally designed with
 particular geometries which allow a closed-form analytical solution to the loop closure
@@ -407,11 +407,11 @@ equations. For instance, non-redundant serial manipulators often have the last t
 revolute axes intersecting in a same point, which greatly simplifies the solution of the
 inverse kinematics problem [Angeles 03].
 
-\subsubsection{Substitution: algebraic view}
+\subsection{Substitution: algebraic view}
 
 Two main approaches have been classically used: continuation and elimination (see [Nielsen 97] for a complete survey of these techniques). Polynomial continuation methods [Wampler 90] are purely numerical procedures able to find all possible solutions of the set of non-linear equations (in contrast to other numerical methods, such as Newton- Raphson, which converge to a single solution). These methods are based on homotopy techniques for gradually transforming a ``start'' system whose solutions are known to the system whose solutions are sought. These methods are robust and applicable to any set of equations. However, since they are iterative procedures, they are too slow in practice. Elimination approaches use one of the next algebraic methods: the Gr\"obner Basis method [Buchberger 82], which is an iterative variable elimination technique, or the resultant method [Gelfand 94], capable of eliminating all but one variable in a single step. In both cases, the elimination process normally leads to an univariate polynomial, relatively easy to solve [Pan 99]. The applicability of the Gr\"obner Basis method is mainly limited by its algorithmic complexity. Resultant methods can provide computationally fast techniques, but they require geometric intuition to nd (if possible) the formula for the resultant.
 
-\subsubsection{Alternative methods}
+\subsection{Alternative methods}
 
 Lately, interval methods for solving systems of non-linear equations have been proposed
 as an alternative to continuation and elimination methods. They are based on interval
@@ -422,11 +422,11 @@ on subdivision [Sherbrooke 93, Merlet 01, Porta 02]. They are completely numeric
 robust techniques. Although implemented techniques are still slow, recent improvements
 are signifficantly increasing their efficacity [Porta 03].
 
-\subsection{Geometric substitution}
+\section{Geometric substitution}
 
 We only treat here the geometric substitution case, with some simple example to give a broad insight of the approach. The geometric methods are not general, in the sense that they cannot be applied automatically but rather require the intuition of a robotic engenieer to chose the proper substitution. These methods were generalized in the case of 6-DOF revolute robots: the subsequent algebraic substitution are general (they work automatically for any revolute 6-DOF robots) but have not been generalized to other kinematic chains. 
 
-\subsubsection{Simple planar 2R robot}
+\subsection{Simple planar 2R robot}
 
 A 2R robot is a fixed kinematic chain composed of two revolute joints with parallel rotation axis. The configuration space is $\mathbb{S}^1  \times \mathbb{S}^1$. It therefore evoles in the plane orthogonal to the rotation axes. Two axes does not enable to control at the same time the two positions and the orientation. We therefore only consider the projection of the direct geometry function in the position space $\mathbb{R}^2$ (removing the orientation). The projected direct geometry map is:
 \[ K: (q_1,q_2) \in \mathbb{S}^1  \times \mathbb{S}^1 \rightarrow \Big( l_1 cos(q_1)+ l_2 cos(q_1+q_2),l_1 sin(q_1)+ l_2 sin(q_1+q_2) \Big) \]
@@ -440,7 +440,7 @@ By anthropomorphism, the first joint is called the ``shoulder'' and the second t
 The shoulder angle is given by the angle to the point:
 \[ \]
 
-\subsubsection{And the wrist?}
+\subsection{And the wrist?}
 
 The same decomposition can be applied if two shoulder joints drives the robot orientation in the tridimensionnal space. 
 
@@ -452,7 +452,7 @@ A more formal and very complete description of the geometrical substitution can 
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\section{Iterative optimization} \label{sec:numeric}
+\chapter{Iterative optimization} \label{sec:numeric}
 
 In the previous section, we have defined the inverse geometry problem and shown that there is no solution (yet) to solve it algebrically in the general case. Therefore, the only remaining solution is to approximate it numerically.
 
@@ -463,7 +463,7 @@ where $m^*$ is the reference position of the end effector in $SE(3)$ and dist is
 
 In this section, we will introduce the basics of the methods to solve this kind of problem. To simplify the presentation, we will focuse on the optimization in $mathbb{R}^n$, \mie in a given global coordinates system rather than directly in the manifold. Care has to be taken when coming back to more general manifolds (like $SE(3)$) to properly take into account the topology. We will focuse here on the optimization algorithms rather than on the analysis of the optimization problem itself (optimality conditions, caracterization, etc). A complete introduction to the optimization analysis can be found in [Hiriart-Urruty 11].
 
-\subsection{Optimality condition}
+\section{Optimality condition}
 
 We consider here only twice-differentiable $\mathcal{C}^2$ functions from a vector space $\mathbb{R}^n$ to $\mathbb{R}$:
 \[ f: \mathbb{R}^n \rightarrow \mathbb{R} \]
@@ -518,7 +518,7 @@ Consider $f\in\mathcal{C}^2$. Then the developments of $f$ in $x$ are:
 \end{itemize}
 \end{theorem}
 
-\subsection{Overview of the algorithms}
+\section{Overview of the algorithms}
 
 The optimality conditions only use the information provided by the derivative of $f$. Similarly, the optimization algorithm will use this same information to search for the solution. 
 
@@ -528,9 +528,9 @@ The direction $p_k$ is chosen from a local model of $f$ around $x_k$, typically 
 
 The  iterative descente methods build a sequence of points $\Big(x_k \Big)_{k\in\mathbb{N}}$ with $\forall k, f(x_k) \le f(x_{k+1})$. Under some decrease conditions, the sequence converges to a local minimizer $x^*$. The convergence is assymptotic, which means that in a finite amount of time, only an approximation of $x^*$ is finally obtained in general. From the decrease conditions, a characterization of how quickly the algorithm converges toward the local minimizer can also be obtained.
 
-\subsection{Descent direction}
+\section{Descent direction}
 
-\subsubsection{Gradient descent method}
+\subsection{Gradient descent method}
 
 The first method is to choose the descent direction given by the gradient of $f$ in $x_k$:
 \[ p_k = -\frac{1}{|| \nabla f_k||} \nabla f_k \] 
@@ -551,64 +551,264 @@ The rate $\rho$ can be computed from the eigenvalues of the Hessian:
 \[ \rho = \Big( \frac{\lambda_n - \lambda_1}{\lambda_n + \lambda_1} \Big)^2 \]
 \end{theorem}
 
+The rate of convergence is linear, which is slow in general, and can typically be too slow for any application even for non singular cases. As explained in the book [LeMarechal06], the gradient descent should be considered only for theoretical study and should be forbiden for any applicative reason.
 
-\subsubsection{Newton method}
+The study of the gradient descent on simple examples, like searching for the minimum of a quadric, reveal that the optimal step length is always at a point where the descent direction $p_k$ is orthogonal to the gradient computed at the new point $x_{k+1}$:
+\[ \alpha^* \textrm{ is such that } p_k^T \nabla f(x_k + \alpha_k^* p_k) = 0 \]
+The gradient descent therefore produces a zigzag trajectory to the optimum with $\frac{\pi}{2}$ rotations at each point $x_k$ of the sequence. A typical example used to exhibit the defect of the gradient descent is an optimization landscape where the optimum is at the end of non-straight deep canyon, for example the ``banana'' Rosenbrock function:
+\[ b: (x,y) \in \mathbb{R}^2 \rightarrow b(x,y) =  (1-x)^2  + 100 (x^2 - y)^2 \]
 
-\subsubsection{Quasi-Newton method}
+The idea behind the Newton descent is therefore to use additional second-order knowledge about the geometry of $f$ that are not the speepest at the current point but move more directly toward $x^*$.
 
-\subsubsection{Gauss-Newton method}
+\subsection{Newton method}
 
+The Newton\footnote{Newton was the first one to exhibit its eponymous method, for searching the root of a polynomial, but only in an unpublished booknote. He therefore shared the leadership with Raphson, who published in a similar context an equivalent formulation. Both names Newton or Newton-Raphson are used indenstigly used.}
+ method approximate the function $f$ at $x_k$ by the quadric defined by the second order Taylor approximation (\mie the inexact development with $t=0$), given by:
+\[ m_k: p \rightarrow f(x_k) + \nabla f_k^T p + p^T \ddpartial{f}{x}(x_k) p \]
+The two functions $f$ and $x \rightarrow m_k(x-x_k)$ have the same value of their derivative of order 0 to 2 at $x_k$. 
 
-\subsection{Step length}
+This function has one global minimum, obtained when the derivative of $m_k$ vanishes and that gives the direction descent of the Newton method:
+\EIN{newton} p_k = - \ddpartial{f}{x}(x_k)^{-1} \nabla f_k   \EOUT
+
+The Newton method has a ``natural'' step length $\alpha = 1$. It provides a quadratic convergence to the local minimum, under the condition that $\ddpartial{f}{x}$ is positive definite at any point of the descent sequence. This is formalized by the following theorem.
+
+\begin{theorem}[Rate of convergence of the Newton method]
+Consider a function $f$ and a neighborghood $\mathcal{N}$ of a local minimizer $x^*$ of $f$ where $f$ is Lipschitz continuous. Then for any $x_0$ sufficiently close to $x^*$, $(x_k)_{k\in\mathcal{N}}$ converges quadratically to $x$: there exist $0<\rho<1$ and $N\in\mathbb{N}$ sufficiently so that:
+\[ \forall k>N, || f(x_{k+1}) || < \rho || f(x_k) ||^2 \]
+\end{theorem}
+The complete proof is given in the book [Nocedal 06]. The convergence rate $\rho$ depends on the Hessian norm and Lipschitz coefficient: $\rho = \frac{L}{|| \ddpartial{f}{x}(x^*) ||}$.
+
+The Lipschitz continuity around a point satisfying the second-order optimality condition guarantee the positive-definitness of the Hessian during all the descent. On the opposite, is the Hessian becomes non-positive (for example, for $x_0$ too far from $x^*$), the descent direction \eq{eq:newton} may not be a descent direction any more. In that case, the algorithm diverges, generally violently.
+
+\subsection{Quasi-Newton method}
+
+Very often in practice, the Hessian is to expensive too compute. Typically, the derivative are very often computed by finite difference:
+\[ \dpartial{f}{x_i} (x_0) \approx \frac{f(x_0 + \epsilon x_i) - f(x_0)}{\epsilon} \]
+with $x_i$ the $i^{TH}$ element of the cannonical basis and $\epsilon$ is a sufficiently small real number. The algorithmic cost of computing the gradient of a function from $\mathbb{R}^n$ to $\mathbb{R}$ is linear in $n$, and is $n^2$ for the Hessian, which might be unacceptable. Moreover, if it is often easy to get a good approximation of the gradient by finite difference, the Hessian approximation is often of much less quality, and the difference to its real value should be considered when studying the convergence rate.
+
+The quasi-Newton methods are therefore the most-often used class of method. They choose the descent direction as:
+\EIN{quasi} p_k = B_k^{-1} \nabla f_k \EOUT
+where $B_k$ is a $n\times n$ positive definite matrix than converges to the Hessian:
+\EIN{quasiB} \lim_{k\rightarrow+\infty} B_k = \ddpartial{f}{x}(x^*) \EOUT
+
+Since we are not using the real Hessian, the rate of convergence is not as good as for the pure Newton descent. However, we keep a supra-linear convergence rate (much faster than the gradient).
+
+\begin{theorem}{Rate of convergence of quasi-Newton methods}
+Consider a sequence $(x_k)_{k\in\mathbb{N}}$ built using \eq{eq:quasi} such that \eq{eq:quasiB} holds. If $(x_k)$ converges to a local minimizer $x^*$ of $f$ with positive definite Hesssian, then the rate of convergence is superlinear, \mie for any $0<\rho <1$, there exist $N\in\mathbb{N}$ such that:
+\[ \forall k>N, f(x_{k+1}) < \rho f(x_k) \]
+\end{theorem}
+While a linear rate converges to some linear assymptote, the superlinear becomes faster than any assymptote after sufficiently many iterations.
+
+This last theorem is stronger and weaker than the one characterizing the Newton method. Stronger because it does not impose the restrictive condition of the Hessian positivity or continuity. Weaker because it is not able to ensure the convergence to any minimizer. The condition \eq{eq:quasiB} can even be reduced to:
+\EIN{quasiB} \lim_{k\rightarrow+\infty} || \big( B_k - \ddpartial{f}{x}(x^*) \big) p_k || = 0 \EOUT
+for $||p_k||=1$, that is to say, the Hessian has to be correctly approximated only in the descent direction.
+
+Two classes of quasi-Newton methods can be distinguished. The first ones estimate the Hessian without any second order computation, by collecting the information of the geometry of $f$ while building the descent sequence. The second ones use an approximation of the Hessian, typically that is faster to compute, and that converges to the real Hessian close to the local minimizer.
+
+Among the first ones, the most often used is the BFGS method (from the names of the inventors) that maintain during all the algorithm an approximation of the inverse Hessian (sparing at the same time the computation of the derivative and its inverse) by collecting the rate of variation of the gradient.
+
+The next section will focuse on a typical example of the second class.
+
+\subsection{Gauss-Newton method}
+
+The Gauss-Newton method can be used to search for the minimizer of a least-square function, that is to say a function $f$ that is written as the square Euclidean norm of a vector function:
+\[ \forall x \in \mathbb{R}^n, f(x) = \frac{1}{2} r(x)^T r(x) \]
+where the function $r : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a vector-value function, called the residual function, that we want to minimize in the least-square sense.
+
+Then, the gradient of $f$ is:
+\[ \dpartial{f}{x}(x) = \dpartial{r}{x}^T(x) r(x) \]
+and its Hessian is:
+\[ \ddpartial{f}{x}(x) = \dpartial{r}{x}^T(x) \dpartial{r}{x}(x) + \sum_{i=1}^m \ddpartial{r_i}{x}(x) r_i(x) \]
+where the real-valued function $r_i$ is the $i^{TH}$ component of $r$.
+
+The so-called Gauss approximation is to neglect the second term of the Hessian. This approximation holds when the Hessian of the $r_i$ are small and when the residuals are small. 
+Neglecting the second term has the advandage that both the gradient and the approximated Hessian of $f$ can be computed using only first order derivatives of $r$. The approximated Hessian is then simply $B_k =  \dpartial{r}{x}^T(x_k) \dpartial{r}{x}(x_k)$.
+
+The quasi-Hessian is invertible as soon as there is enough independant residuals to ensure that $\textrm{rank} (\dpartial{f}{x}) = n$ (typically one $m>>n$).
+In that case, the descent direction of the quasi-Newton method is:
+\[ p_k = \big( \dpartial{r}{x}^T(x_k) \dpartial{r}{x}(x_k) \big)^{-1} \dpartial{r}{x}^T(x_k) r(x_k) \]
+In this last definition, we can recognize the pseudo inverse of the Jacobian of the residuals:
+\[ p_k = {\dpartial{r}{x}(x_k)}^{+} r(x_k) \]
+
+\section{Modified direction and trust region}
+
+Newton methods may diverge when the Hessian or its approximation are non-positive. It may converge to a non-strict local minimizer or even a static point if the Hessian is positive non-definite.
+
+\subsection{Regularization}
+To avoid the divergence, a quasi-Newton can be used with a modified Hessian that is guaranteed to be positive definite. The typical modification is to add the identity with a weighting parameter:
+\EIN{mu} B_k = \ddpartial{f}{x}(x_k) + \mu I_n \EOUT
+where $\mu$ is the Tikhonov regularization parameter that should be chosen large enough to ensure that $B_k$ is positive definite. When $\mu$ is so large that the Hessian term is neglectible in practice, the quasi-Newton step $B_k^{-1} \nabla f_k$ is equal to the gradient step with step length $1/\mu$. On the opposite, when $\mu$ is small enough so that the identity matrix is neglectible, the quasi-Newton step is equal to the Newton step. The parameter $\mu$ is then used to continuously switch between a gradient descent and a Newton descent.
+
+Another interpretation of $\mu$ in the specific case of least-square functions is to penalize large step $||p_k||$. The use of $B_k$ will make a trade-off between a large step caused by a small singular value of the Hessian and a small step enforced by the penalization term. We will discuss this interpretation with more detail in the next chapter. 
+
+\subsection{Trust region}
+Finally, we only discuss in this section the line-search methods. The trust-region method also rely on a model $m_k$ of $f$ around $x_k$ but then decide at the same time the direction and the length by solving a subproblem based on the model $m_k$:
+\[ \min_{||p_k|| \le \Delta_k} m_k(p_k) \]
+It can be shown (see [Nocedal 06]) that the minimizer of this problem when $m_k$ is a quadric approximating $f$ in $x_k$ has a form equal to \eq{eq:mu} for some $\mu$ that have to be selected. Using this view on the problem, only $\Delta_k$ has to be chosen, $\mu$ being automatically chosen by solving the trust-region subproblem.
+
+\subsection{Levenberg-Marquardt algorithm}
+When the regularizer $\mu$ is needed, the complete algorith needs to determine two real coefficient at each iteration: $\alpha$ and $\mu$. The parameters are often adapted during the descent following some Heuristic. The most well known is the Levenberg-Marquardt algorithm.
+
+In practice, the two parameters $\alpha$ and $\mu$ are modified depending on the ratio between the expected improvement of the current step and the improvement really obtained:
+\[ \rho_k (\alpha,\mu) \triangleq \frac{ f(x_k) - f(x_k + \alpha_k p_k)}{ f(x_k) - m_k(\alpha_k p_k)} \]
+First $\alpha_k$ is decided, typically by dichotomy from the unit step length $\alpha_k=1$ down to a minimal step length $\alpha_k = 10^{-6}$. The dichotmomy stops when a decrease of $f$ is obtained. If no decrease can be obtained, the direction is rejected, and the process start again with a bigger regularizer $\mu$. Now, for an acceptable $\alpha_k$, if $\rho_k$ is close to 1, the step is ideal and the optimization decrease as fast as possible. Inversely, if $\rho_k$ is close to 0 or even negative, the step is very poor or even diverge. In that case, a smaller trust region (\mie a bigger regularizer $\mu$) should be chosen. 
+
+% ------------------------------------------------------------------------------
+\section{Conclusion}
+
+The methods that have been quickly presented in this section are converging very quickly to a local optimizer as soon as they are in a proper region of the input space, where the function is locally convex. This bassin of attraction of the local minimizer is very difficult to analytically or even numerically describe. However, outside of this bassin, the convergence is not guaranteed and is in any case very slow. Typically, outside the attraction bassin, the trust-region Newton methods loose their quadratic convergence to become as slow as the gradient. Moreover, the convergence is only on a local minimizer, that is not guaranteed to be global and not even to be interesting. Typically, when solving the inverse-geometry problem, the obtained configuration can typically not meet the desired end-effector placement, or even be very far from it.
+
+All the challenge of numerical methods is to provide the proper intial guess. This is the only solution to ensure a quick and interesting convergence to a proper minimizer.
+
+These numerical methods are working for optimizing a function from $\mathbb{R}^n$ into $\mathbb{R}$. Being given a norm on the image space of any vector function, they can be adapted to search for the minimum of the distance to a given element of the image space. 
+We now have all the tools to numerically approximate a configuration of the robot that matches a given desired end-effector placement.
+
 
 
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\section{Numerical inverse geometry}\label{sec:numinvgeom}
+\chapter{Numerical inverse geometry}\label{sec:numinvgeom}
+
+The Gauss-Newton descent defined in the previous section gives a direct solution to search for the local minimum residulas of a vector to vector function $r: \mathbb{R}^m \rightarrow \mathbb{R}^n$. However, the inverse-geometry problem is rather written as a minimum-residuals of a function from a Lie group $\mathcal{M}$ of dimension $m$ to a Lie group $\mathcal{N}$ of dimension $n$, typically from the configuration space to $SE(3)$: 
+$$ r: q \in \mathcal{Q} \rightarrow r(q) =  m(q)^{-1} m^*  \in SE(3) $$
+where $m(q)$ is the placement of the end effector and $m^*$ is the reference placement that should be reached. Moreover, a proper norm on $\mathcal{N}$ should be chosen to define the least square.
+
+Locally, the map $r$ can be identified to a map from a neighborghood of 0 in $\mathbb{R}^m$ to a neighborghood of 0 in $\mathbb{R}^n$. Intuitively, the Gauss Newton method should then be adapted, since it uses only local information on the residual maps. 
+
+A first naive solution is to identify the residual map $r$ to the vector map from the local coordinates of $\mathcal{M}$ to the local coordinates of $\mathcal{N}$. When Lie groups are considered, this solution is valid since the local chart can be translated to a global chart. However, the global chart does not have nice global properties. In particular, it does not preserve the topology of the manifolds and therefore might badly interact with the iterative descent, adding an additional artificial layer of non linearity upon the initial problem, which slow down the algorithm. Rather, the local chart should be adapted around the candidate solution during the descent. Two aspects have to be considered: the representation of the candidate parameters in the input space $\mathcal{M}$ and the norm in the output space $\mathcal{N}$.
+
+Let denote by $x_k \in \mathcal{M}$ a candidate minimum of the residual function $r$. We search a proper representation of the next candidate $x_{k+1}$. This can simply be done using the local exponentional representation centered on $x_k$. That is to say that $x_{k+1}$ is represented by the increment $d_k \in \mathbb{R}^m \repr T_{x_k} \mathcal{M}$  by:
+$$ x_{k+1} \repr x_k e^{d_k} $$
+
+Similarly the norm in the output space can be chosen as the Euclidean norm of the canonical representation of the residuals. 
+$$ f(x_{k+1}) = \Big\| log \big( r(x_{k+1}) \big) \Big\|^2 $$
+where $f: \mathcal{M} \rightarrow \mathbb{R}$ is the real-value function to be optimized by the Gauss-Newton algorithm.
+
+%In the case of the inverse-geometry problem (\mie $\mathcal{N} = SE(3)$), the norm-2 in the tangent space $\mathfrak{se}(3)$ corresponds to the Froebenius norm of the homogeneous matrix representation:
+%$$  \| log ( m ) \| = \| M \|
+
+When the input space $\mathcal{M}$ is the special Euclidean groupo $SO(3)$ or a cartesian product of simple Lie Group with $SO(3)$, the quaternion representation (identified as the vector space $\mathbb{R}^4$) is often used in practice. A typical example of such problems is the problem known as ``structure from motion'' or simultaneous localization and mapping'', where a moving sensor (typically a camera) moves inside an unknowned environment while building a map of it. The optimization problem has then to be then rewritten as a constrained optimization problem:
+$$ \min_{q \in \mathbb{R}^4} f(q) $$
+$$ \textrm{subject to} \quad  q^T q = 1 $$
+where $f$ is typically the maximum likelyhood of the camera position.
+The constrained-optimization problem is out of the scope of this part and is not further detailed. In practice, the constrained might be neglected, each new candidate $q_{k+1}$ being normalized after each Newton iteration. This solution lacks of rigor but not of efficiency. 
+
 
 % ##############################################################################
 % ##############################################################################
 % ##############################################################################
-\chapter{Inverse kinematics}
+\part{Inverse kinematics}
 
-\section{The pseudo inverse}
+The robot kinematics refers to the motion of the robot bodies with respect to the motion of the robot joints\footnote{As mentionned earlier, ``kinematics'' is often extended to designate also the robot geometry; in such a case, the reference to the velocity is made explicit by using the term ``differential kinematics''. In these notes, the word kinematics is exclusively used to designate the derivatives of the motion, \mie velocity and its derivatives.}. Most of the time, the word ``kinematics'' is limited to the robot velocity, but the same rules apply to the higher-order motion derivatives, in particular to the robot acceleration. The last case is often refered as ``second-order kinematics''. 
 
-\section{The robot Jacobian}
+As for the geometry, the direct kinematics designates the function that maps the velocity of the joint (tangent to the configuration space) to the velocity of the robot bodies, typically the linear and angular velocities of the robot end effector (tangent to $SE(3)$). This is a proper closed-form function that is easy to calculate. The inverse kinematics is then the problem to find the reciprocal to this direct map, when it is defined, \mie, being given a reference velocity to executed by the robot end effector, what is the configuration velocities that accomplish this reference. Since we are at the level of the derivative, this problem is linear. It is therefore easier to study and to numerically solve than the inverse geometry problem. 
+
+In particular, the resolution of the inverse geometry problem using Gauss-Newton descent can be rewritten as a sequence of inverse-kinematics resolution. 
+
+
+% ##############################################################################
+\chapter{Direct kinematics}
+
+\section{The kinematic twist}
+
+\subsection{Velocity vector field}
+
+Consider a moving rigid object $B$ described by the position $^Bp \in \mathbb{R}^3$  of all its points in a coordinate frame attached to the object. The motion of $B$ is described with respect to a static coordinate frame $A$ by a trajectory in $SE(3)$:
+$$ ^Am_B: t \rightarrow \leftidx{^A}{m}{_B}(t) $$
+For any point $p$ of $B$, the position of $p$ in the coordinate frame $A$ is given by:
+$$ ^Ap(t) = \leftidx{^A}{m}{_B}(t) (^Bp) = \leftidx{^A}{M}{_B}(t) ^Bp $$
+with $M$ the homogeneous matrix representation of $m$. Each point $p$ then defines a trajectory in $\mathbb{E}(3)$, that can be derivated. The time derivative is the velocity of the point $p$ expressed in the coordinate system $A$ and denoted by $v$:
+$$ ^Av_p(t) =  \leftidx{A}{\dot p}{}(t) $$
+The velocities at every points $p$ for a given (fixed) time $t$ defines a vector field. Using the homogeneous representation of $^Am_B$, the coordinates of $v$ in $A$ are easily expressed:
+$$ ^Av_p(t) = \dot{ \leftidx{^A}{m}{_B}}(t) \leftidx{^B}{p}{} =  \dot{ \leftidx{^A}{m}{_B}}(t) \leftidx{^A}{m}{_B}(t)^{-1} \leftidx{^A}{p}{}$$
+
+
+
+
+\section{From the kinematic tree to the kinematic direct map}
+
+
+
+% ##############################################################################
+\chapter{The pseudo inverse}
+
+\section{Moore-Penrose}
+\subsection{Definition}
+\subsection{Case of invertible matrices}
+\subsection{Proof of unicity}
+
+\section{Singular-value decomposition}
+\subsection{Definition from the Eigen decomposition}
+Symmetric matrices, eigen decomposition, decomposition of $AA^T$, singular values of $A$ $\sigma_i = \lambda_i^2$, left singular basis $u_i$ of Eigen vectors, right singular basis $v_i = \frac{1}{\sigma_i} A^T u_i$. 
+\subsection{Constructive proof of existence of the pseudo inverse}
+
+
+\section{Some properties}
+\subsection{Construction from the square} % A+ = (A'A)+ A'
+\subsection{Rank, full rankness}
+\subsection{Range, kernel and projectors}
+\subsection{Other generalized inverses}
+
+\section{Unconstrained quadratic programing}
+\subsection{Definition}
+\subsection{Elements of calcul}
+\subsection{Complete orthogonal decomposition}
+\subsection{Regularization}
+
+% ##############################################################################
+\chapter{Resolution of the inverse-kinematics problem}
 
 \section{Inverting the Jacobian}
+\section{Task function}
+\subsection{Formal definition}
+\subsection{Examples}
+Center of mass, relative placement, visual servoing
 
-\section{Redundancy}
+% ##############################################################################
+\chapter{Redundancy}
 
-\section{Active-set search}
+\section{Projection}
+\subsection{Projected gradient}
+\subsection{Second task}
+\subsection{Stack of tasks}
+\subsection{Regularization}
+
+\section{Weighted inverse}
+\subsection{Definition}
+\subsection{Resolution}
+
+
+% ##############################################################################
+\chapter{Active-set search}
 
 % ##############################################################################
 % ##############################################################################
 % ##############################################################################
-\chapter{Inverse dynamics}
+\part{Inverse dynamics}
 
-\section{Velocities and forces}
+\chapter{Velocities and forces}
 
-\section{The dynamic equation of a multi#body system}
+\chapter{The dynamic equation of a multi-body system}
 
-\subsection{Recursive Newton#Euler algorithm}
+\section{Recursive Newton-Euler algorithm}
 
-\section{Operational#space inverse dynamics}
+\chapter{Operational-space inverse dynamics}
 
-\section{Synthesis: a overview of constrained optimization}
+\chapter{Synthesis: a overview of constrained optimization}
 
 % ##############################################################################
 % ##############################################################################
 % ##############################################################################
-\chapter{Optimal control}
+\part{Optimal control}
 
-\section{Inifinite#space optimization}
+\chapter{Inifinite-space optimization}
 
-\section{Discretization and static optimization}
+\chapter{Discretization and static optimization}
 
-\section{Linear#quadratic resolution}
+\chapter{Linear-quadratic resolution}
 
-\section{The example of the robot walk}
+\chapter{The example of the robot walk}
 
 
 \end{document}
