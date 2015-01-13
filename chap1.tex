@@ -252,7 +252,7 @@ where $r \repr w$ is the exponential representation of the rotation part of $m \
 This intuitive coordinates system is close to be the exponential coordinates of $SE(3)$ but is not exactly it. This means that their derivative does not fit with the tangent space to $SE(3)$, \mie to the velocity of rigid bodies. To obtain the exponential coordinates of $SE(3)$, the procedure is similar to the one performed in $SO(3)$. 
 
 Let $m(t)$ be a curve in $SE(3)$. By analogy, consider the following matrix:
-\[ \dot{M}(t) M(t)^{-1} = \BIN \dot{R}(t) R(t)^T & \dot{p}(t) - \dot{R}(t) R(t)^T p(t) \\ 0&1 \BOUT \]
+\EIN{nu} \dot{M}(t) M(t)^{-1} = \BIN \dot{R}(t) R(t)^T & \dot{p}(t) - \dot{R}(t) R(t)^T p(t) \\ 0&1 \BOUT \EOUT
 We denote by $w(t)$ the angular velocity $\hat{w}(t) = \dot{R}(t) R(t)^T$. The last columns is then denoted by $v(t) = \dot{p}(t) + p(t) \times w(t)$. The pair $\nu(t) = (v(t),w(t)) \in \mathfrak{se}(3) = \mathbb{R}^3 \times \mathfrak{so}(3)$ can be identified to the tangent vector to the curve $m(t)$. It corresponds to the kinematic screw (``torseur cin\'ematique'' in French) of the rigid body moving following $m(t)$, expressed at the origin of the coordinates system of $\mathbb{E}^3$ in which $m(t)$ is expressed. See next subsection for details.
 
 By integration of a constant kinematic screw $\nu = (v,w)$ on $[0,1]$, the exponential map is obtained.
@@ -719,42 +719,421 @@ $$ ^Am_B: t \rightarrow \leftidx{^A}{m}{_B}(t) $$
 For any point $p$ of $B$, the position of $p$ in the coordinate frame $A$ is given by:
 $$ ^Ap(t) = \leftidx{^A}{m}{_B}(t) (^Bp) = \leftidx{^A}{M}{_B}(t) ^Bp $$
 with $M$ the homogeneous matrix representation of $m$. Each point $p$ then defines a trajectory in $\mathbb{E}(3)$, that can be derivated. The time derivative is the velocity of the point $p$ expressed in the coordinate system $A$ and denoted by $v$:
-$$ ^Av_p(t) =  \leftidx{A}{\dot p}{}(t) $$
+$$ ^Av_p(t) =  \leftidx{^A}{\dot p}{}(t) $$
 The velocities at every points $p$ for a given (fixed) time $t$ defines a vector field. Using the homogeneous representation of $^Am_B$, the coordinates of $v$ in $A$ are easily expressed:
-$$ ^Av_p(t) = \dot{ \leftidx{^A}{m}{_B}}(t) \leftidx{^B}{p}{} =  \dot{ \leftidx{^A}{m}{_B}}(t) \leftidx{^A}{m}{_B}(t)^{-1} \leftidx{^A}{p}{}$$
+$$ ^Av_p(t) = \dot{ \leftidx{^A}{M}{_B}}(t) \leftidx{^B}{p}{} =  \dot{ \leftidx{^A}{M}{_B}}(t) \leftidx{^A}{M}{_B}^{-1}(t) \leftidx{^A}{p}{} = \leftidx{^A}{\hat \nu}{_{AB}}(t)  \leftidx{^A}{p}{}  $$
+where $^A\nu_{AB} = ( \leftidx{^A}{v}{_B},\leftidx{^A}{w}{_B} )$ is the twist relative to the frames $A$ and $B$ expressed in the coordinate system $A$, and defined in \eq{eq:nu} and $\hat .$ is the operator passing from the vector representation to the matrix representation of the Lie algebra. In particular, the $v$ part of the twist corresponds to the velocity of the point of $B$ that passes by the origin of $A$ at time $t$ (thus making logical to use the notation $v$ both for the velocity vector field and for the first part of the twist).  The twist $^A\nu_{AB}$ corresponds to the classical definition of the twist in mechanics (``torseur cin\'ematique'' in French) expressed at the origin $A$. The first part $v$ is called the linear velocity, $w$ being the angular velocity.
 
 
 
+\subsection{Instantaneous twist}
+
+When defining the twist, we have chosen to look at the product $\dot{m} m^{-1}$. This is a convention. We can consider the commutation of the product instead. This corresponds to the velocity of a pont $p$ but expressed in the basis of the coordinate system $B$ and denoted by $^Bv$:
+$$ ^Bv(t) = \leftidx{^A}{m}{_B}(t)^{-1} \leftidx{^A}{v}{p}(t) = 
+\leftidx{^A}{m}{_B}(t)^{-1} \dot{\leftidx{^A}{m}{_B}}(t) \leftidx{^B}{p}{} $$ 
+Similarly, we define $\leftidx{^B}{\nu}{_{AB}}$ the twist expressed in the body coordinate system by:
+$$ \leftidx{^B}{\hat \nu}{_{AB}} =\leftidx{^A}{m}{_B}^{-1} \dot{\leftidx{^A}{m}{_B}}$$
+The velocity of any point $p$ in the body system is given by:
+$$ ^Bv(t) = \leftidx{^B}{\hat \nu}{_{AB}}(t) \leftidx{^B}{p}{} $$
+The twist in $B$ is defined outside of any world reference and is therefore named the instantaneous twist.
+
+\subsection{Twist actions}
+
+From the above two definitions, we have the following simple relations between the two twist representations:
+$$ \leftidx{^B}{\hat \nu}{_{AB}} = 
+\leftidx{^A}{M}{_{B}}^{-1} \ 
+\leftidx{^A}{\hat \nu}{_{AB}} \ 
+\leftidx{^A}{M}{_{B}}
+$$
+This bilinear form in $^Am_B$ can be reduced using the bilinear property of the cross product hidden inside $\nu$:
+$$ \leftidx{^A}{\nu}{_{AB}} = \BIN \leftidx{^A}{R}{_B} & \leftidx{^A}{\hat p}{_B} \leftidx{^A}{R}{_B} \\ 0 & \leftidx{^A}{R}{_B} \BOUT  \leftidx{^B}{\nu}{_{AB}}$$
+with $^AM_B = ( \leftidx{^A}{R}{_B},  \leftidx{^A}{p}{_B} )$ denoting respectively the rotation and translation part of $^AM_B$.
+
+{\footnotesize
+\begin{proof}
+First recall that we have:
+$$M^{-1} = \BIN R^T & -R^T p \\ 0 & 1 \BOUT$$
+Then:
+\begin{align} \leftidx{^A}{\hat \nu}{} &= \BIN R^T & -R^T p \\ 0 & 1 \BOUT 
+\BIN ^B\hat w & ^Bv \\ 0 & 1 \BOUT
+\BIN R & p \\ 0 & 1 \BOUT 
+\\
+&=
+\BIN R^T \  \leftidx{^B}{w}{}\ R & R^T \ \leftidx{^B}{v}{} + R^T \  \leftidx{^B}{\hat w}{}\  p \\ 0 & 0 \BOUT 
+\\
+&=
+\BIN \hat{} (R\ \leftidx{^B}{w}{})  & R^T \ \leftidx{^B}{v}{} -   R^T p \  \leftidx{^B}{\hat w}{} \\ 0 & 0 \BOUT 
+\end{align}
+using the fact that $R \hat{w} = \hat{} (R\ \leftidx{^B}{w}{}) R$ (bilinearity of the cross product). The last equality is finaly reduced to the vector form to give the expected result. 
+\end{proof}
+}
+
+The twist transformation matrix is denoted by $^AX_B$. It transforms the twist expressed at the origin of the system $A$ to the twist expressed at the origin of the system $B$. If the two frames of $A$ and $B$ are aligned, the transformation corresponds to a change of application point of the twist. 
+
+Geometrically, the application $X$ corresponds to the action of the group $SE(3)$ on the Lie Algebra $\mathfrak{se}(3)$. See [Murray94] for a detailed discussion on Lie actions.
+
+\subsection{Velocity vector field}
+In particular, the twist can be expressed at any point $p$ of the rigid body $B$ using the basis of the system $A$. In that case, we recover the velocity vector field expressed in the frame $A$:
+$$ ^Av_p = \leftidx{^A}{v}{_{AB}} + \leftidx{^A}{p}{} \times \leftidx{^A}{w}{_{AB}} $$
+We denote by $L_p(t)$ the vector field that at any point $p$ fixed in the world (that is to say defined by a constant $^Ap$ associates $^Av_p(t)$ the velocity of the particule of the body passing by $p$ at time $t$. This corresponds to the Eulerian specification of the flow (which is rigid in this case) of particules attached to the body $B$. Intuitively, in corresponds to the point of view of a observer fixed with respect to a ``inertial'' world frame $A$ and looking at the flow passing at a specific point.
+
+On the opposite, the instantaneous twist defines another vector field, defined by:
+$$ ^Bv_p = \leftidx{^B}{v}{_{AB}} + \leftidx{^B}{p}{} \times \leftidx{^B}{w}{_{AB}} $$
+We denote by $E_p(t)$ the vector field that at any point p fixed in the body (\mie defined by a constant $^Bp$) associates $^Bv_p(t)$. This corresponds to the Lagrangian specification of the flow field, and intuitively matches the point of view of an observer attached to the body and looking to the velocity of one point of the body as it moves through time.
+
+\subsection{Twist sum}
+
+The twists are defined in $\mathfrak{se}(3)$ which is a vector space. Two twists expressed in the same coordinate system can then be summed. Consider the case of two rigid bodies $B$ and $C$ moving in relative to a frame $A$, where the motion of $B$ is described with respect to $A$ by $^Am_B$ and the motion of $C$ is defined with respect to $B$ by $^Bm_C$. Then the twist describing the velocity of $C$ relative to $A$ is given by:
+\begin{align}
+ ^A\nu_{AC} &= \leftidx{^A}{\nu}{_{AB}} + \leftidx{^A}{\nu}{_{BC}} \\
+ ^A\nu_{AC} &= \leftidx{^A}{X}{_B} \big( \leftidx{^B}{\nu}{_{AB}} + \leftidx{^B}{X}{_C} \ \leftidx{^C}{\nu}{_{BC}}  \big) \end{align}
 
 \section{From the kinematic tree to the kinematic direct map}
 
+\subsection{Joint Jacobian}
+
+Recall that the joint geometry map $K_i$ is a function from the joint configuration Lie group $\mathcal{Q}_i$ to $SE(3)$. The map can be derivated using the local vector space structure of the input and output manifolds. We denote by $J_i$ the derivative of $K_i$ at the configuration $q$:
+$$ J_i(q): v_q \in T_q\mathcal{Q} \rightarrow \nu = J_i(q) v_q \in \mathfrak{se}(3) $$
+where $v_q$ is the velocity in the configuration space (formally, a vector of the tangent space to $\mathcal{Q}$ at $q$) and $\nu$ is the kinematics twist generated by the joint (formally, a vector of the tangent to $SE(3)$ at $K_i(q)$). The map $J_i(q)$ is the tangent map to $K_i$ at $q$\footnote{The tangent map to $f : \mathcal{M} \rightarrow \mathcal{N}$ at $m \in \mathcal{M}$  is the only map $T_mf : T_m\mathcal{M} \rightarrow T_{f(m)}\mathcal{N}$ so that for any smooth function $g$ from a neighborghood of $f(m)$ to $\mathbb{R}$ and any tangent vector $\dpartial{}{x} \in T_m\mathcal{M}$ , we have $(T_mf \dpartial{}{x})g = \dpartial{}{x} (g \circ f)$.}. It is linear in $v_q$. It is often abusively referred as the Jacobian of the joint, while the Jacobian should stance for the derivative of the map linking a representation of $\mathcal{Q}_i$ to a representation of $SE(3)$, and we will follow the same abusive name in the remaining of the document.
+
+From the joint Jacobian, the joint direct kinematics map is defined by:
+$$ (q,v_q) \in T_q(\mathcal{Q}_i)\times\mathcal{Q}_i \rightarrow \nu = J_i(q) v_q \in \mathfrak{se}(3) $$
+The twist $\nu$ is the rigid velocity of the body attached to the output of the joint with respect to the local coordinate system of the joint, typically attached to the previous body in the kinematic tree. It can be expressed in any coordinate system $A$. We make the expression explicit as $^A\nu$ and $^AJ_i$. Most of the time, it is expressed in the local coordinate system chosen to express $K_i$. By abuse, we denote this default expression by $J_i= \leftidx{^i}{J}{_i}$.
+
+\subsection{Examples of joint}
+The revolute joint around the arbitrary axis $Z$ has the following simple constant Jacobian:
+$$ J_i(q) = J_{R_z} = (0,0,0,0,0,1) $$
+Similarly the prismatic joint of axis $Z$ has the following constant Jacobian:
+$$ J_i(q) = J_{T_z} = (0,0,1,0,0,0) $$
+In both case, the configuration velocity can be considered as the configuration time derivative $v_q = \dot q$. Finally, the free-flyer joint (that is imposing no constraint on the joint) has its Jacobian equal to the identity:
+$$ J_{ff} = I_6$$
+
+\subsection{Robot direct kinematics}
+
+\subsection{Kinematics map}
+Recall that the direct geometry of the joint $i$ is expressed in a coordinate system local to the joint and expressed with respect to the output of the previous joint by a constant rigid displacement $^im_{i+1}^0$. The direct geometry map of the robot is then:
+\[ K: q \rightarrow  \leftidx{^0}{m}{_{1}^0} K_0(q_0) \leftidx{^1}{m}{_{2}^0} ...   \leftidx{^{n-2}}{m}{_{n-1}^0} K_{n-1}(q_{n-1}) \leftidx{^{n-1}}{m}{_n} \]
+Consider now a curve $q(t)$ in the robot configuration space $\mathcal{Q}$. The curve of the robot end effector $^0m_n(t) = K(q(t) \in SE(3)$ can be derivated easily using the joint Jacobians. The robot end effector is then:
+\[ (q,v_q) \rightarrow  
+\sum_{i=0}^{n-1} \leftidx{^0}{X}{_i} J_i(q_i) v_{q_i} 
+\]
+
+\subsection{Robot Jacobian}
+By identification, the robot Jacobian at $q$ is the following tangent map:
+$$ J(q) = \sum_{i=0}^{n-1} \leftidx{^0}{X}{_i} J_i(q_i) $$
+
+\subsection{Elements of algorithm}
+Algorithmically, the direct kinematics and the Jacobian are computed by a backward loop on the kinematic tree, from the leaf representing the considered end effector.  At each iteration $i$ (from $n-1$ downto $0$) of the loop, we maintain the twist expressed in the local frame of joint $i$ and the corresponding Jacobian:
+$$ ^i\nu_{i:n} = \leftidx{^i}X{_{i+1}} \ \leftidx{^{i+1}}\nu{_{i+1:n}} + \leftidx{^i}{J}{_i}(q_i) v_{q_i} $$
+$$ ^iJ_{i:n} = \leftidx{^i}X{_{i+1}} \ \leftidx{^{i+1}}J{_{i+1:n}} + \leftidx{^i}{J}{_i}(q_i) $$
+where $^i\nu_{i:n}$ is the relative twist of the current body $i$ and the end-effector, expressed in the system $i$ and $^iJ_{i:n}$ the $n-i+1$ columns corresponding to the explored $n-i+1$ nodes of the kinematics tree. The action matrix $X$ is simply computed from the joint geometry function $^im_{i-1} = K_i(q_i)$. The same backward loop would typically (but not necessarily) compute the robot geometry $K(q)$.
 
 
 % ##############################################################################
 \chapter{The pseudo inverse}
 
+From the two previous chapters, we can interpret the  Gauss-Newton descent as a succession of pseudoinverse of the robot Jacobian $J(q_k)^+$, where $q_k$ is the current candidate configuration. Up to now, the pseudoinverse was not properly defined and was only limited to the non-general case where $J^TJ$ is invertible, which is clearly not true in general (this square matrix being only positive and sometime non-definite). In this chapter, we properly define the pseudoinverse and link it to the linear least-square problem.
+
 \section{Moore-Penrose}
+
+The pseudoinverse is formally defined by the four rules of Penrose, from which the existence, unicity and a long list of properties of this operator can be established. In this book, we will mostly see the pseudoinverse through the scope of the singular-value decomposition, that eases a lot (but sometime limits) its understanding. 
+
 \subsection{Definition}
+
+The pseudoinverse $X$ of a matrix $A \in \mathbb{R}{n\times m}$  is defined by the four following rules:
+\EIN{A+1} AXA = A \EOUT
+\EIN{A+2} XAX = X \EOUT
+\EIN{A+3} AX \textrm{ is symmetrical} \EOUT
+\EIN{A+4} XA \textrm{ is symmetrical} \EOUT
+
+The matrix $A$ is possibly non invertible or even non square. We will show in the following that $X$ following these four rules always exists and is unique. It is denoted by $A^+$ (sometimes by $A^\dagger$ or $A^\#$).
+
 \subsection{Case of invertible matrices}
+In the case where $A$ is invertible, it is trivial to check that $A^{-1}$ respects the four rules and therefore $A^+ = A^{-1}$. Indeed, the pseudoinverse can be seen as a generalization of the inverse to any matrix. 
+
+We denote by $N(A)$ the kernel (or null-space) of $A$, $N(A)^\perp$ its supplementary space ($N(A) \oplus N(A)^\perp$) and $R(A)$ the range space of $A$:
+\begin{align}
+\forall x \in N(A), \quad& Ax=0 \\
+\forall x \in N(A)^\perp, \quad& Ax=0 \Rightarrow x=0 \\
+\forall y \in R(A),\quad& \exists x\in N(A)^\perp, Ax=y
+\end{align}
+Then, the linear map $A$ limited to $N(A)^\perp \rightarrow R(A)$ is invertible, and its inverse matches with the pseudoinverse limited to $R(A) \rightarrow N(A)^\perp$ (the proof is left as an exercice).
+
 \subsection{Proof of unicity}
+The existence of $A^+$ is not trivial from the Moore-Penrose definition. We left the proof for the next section. The unicity is however direct. Suppose that two matrix $X$ and $Y$ respect the four rules. Then:
+$$ X = XAX = XX^TA^T = XX^TA^TY^TA^T = XAXAY = XAYAY $$
+In the last equality, the role of $X$ and $Y$ are symmetrical. The same can be done while inverting the two matrices:
+$$ Y = YAY = A^TY^TY = A^TX^TA^TY^TY = XAYAY = X $$
+
 
 \section{Singular-value decomposition}
+
+The previous section formally defines the pseudoinverse. We will now give a constructive property of the pseudoinverse using the singular value decomposition. The full understanding of the pseudoinverse cannot be limited to this constructive definition, but the properties of the SVD help a lot to established many results linked to the pseudoinverse.
+
 \subsection{Definition from the Eigen decomposition}
-Symmetric matrices, eigen decomposition, decomposition of $AA^T$, singular values of $A$ $\sigma_i = \lambda_i^2$, left singular basis $u_i$ of Eigen vectors, right singular basis $v_i = \frac{1}{\sigma_i} A^T u_i$. 
+
+First, recall that a symmetric matrix $S \in \mathbb{R}^{n\times n}$ is diagonalizable in $\mathbb{R}$ with by an orthogonal matrix:
+$$ S = U \Lambda U^T $$
+with $U$ orthogonal, \mie $UU^T = I$ and $\Lambda$ the Eigen diagonal matrix.
+
+Consider now a matrix $A \in \mathbb{R}^{n \times m}$. We denote by $U,\lambda$ the Eigen decomposition of $AA^T$. The Eigen values are denoted by $\Lambda = \textrm{diag}( \lambda_1 ... \lambda_n )$. We suppose in all the following that the Eigen values $\lambda_i$ are sorted. The square matrix $AA^T$ is positive ($\forall x \in \mathbb{R}^n, x^T(AA^T)x = (A^Tx)^T A^Tx \leq 0$) and therefore all Eigen values are positive or null. We denote by $r$ the rank of the matrix. From the positive condition, we have $\forall i=1..n, \lambda_i =0 \iff i>r$.
+
+We define the singular values of $A$ to be the square-root of the Eigen values:
+\[ \sigma_i \triangleq \sqrt{\lambda_i} \]
+We define the right singular vectors by:
+\[ \forall i\leq r, \quad v_i = \frac{1}{\sigma_i} A^T u_i \]
+where $u_i$ is the Eigen vector corresponding to $\lambda_i$. It is easy to check that the family $(v_i)_{i=1..r}$ is orthonormal:
+\[ v_i^T v_j = \frac{1}{\sigma_i \sigma_j} u_i AA^T u_j = \frac{\sigma_j^2}{\sigma_i \sigma_j} \delta_{ij} = \delta_{ij} \]
+where $\delta_{ij}$ is 1 when $i=j$, 0 otherwise.
+
+The family $(v_i)_{i=1..r}$ is augmented of any basis of $n-r$ vectors of the supplementary space to give a orthogonal matrix $V$. Similarly, we define $\Sigma \in \mathbb{R}^{n \times m}$ the matrix whose diagonal coefficients are the $\sigma_i$ and that is null otherwhere.
+
+The triplet $U,\Sigma,V$ is called the singular value decomposition of $A$. It is written:
+\[ A = U \Sigma V^T\]
+The bases $U$ and $V$ are respectivelly called the left and right singular basis. The singular value is often rewritten to make the zero of the diagonal of $\Sigma$ explicit. Denoting by $U_1$ (resp. $U_0$) the Eigen vectors of $AA^T$ of non null (resp. null) Eigen value, and $V_1$ (res. $V_0$) the corresponding right singular vectors, and by $\Sigma_1$ the square diagonal matrix of non null singular values, we can write the sparse decomposition:
+\[ A = \BIN U_1 & U_0 \BOUT \BIN \Sigma_1 & 0 \\ 0 & 0 \BOUT \BIN V_1 & V_0 \BOUT^T = U_1 \Sigma_1 V_1^T \]
+
+With the convention that the singular values are taken positive and sorted, the singular decomposition is unique when the singular values are all different. Otherwise, any choice of the basis of the space span by at least two equal singular value respects the definition.
+
 \subsection{Constructive proof of existence of the pseudo inverse}
 
+Using the SVD, the pseudoinverse of $A$ can be easily build:
+$$ A^+ = V_1 \Sigma_1^{-1} U_1^T $$
+It is immediate to check that this matrix complies with the four conditions of Moore-Penrose. Since the pseudoinverse is unique, this gives a constructive definition of the pseudoinverse.
 
 \section{Some properties}
-\subsection{Construction from the square} % A+ = (A'A)+ A'
-\subsection{Rank, full rankness}
+
 \subsection{Range, kernel and projectors}
-\subsection{Other generalized inverses}
+The SVD reveals the intrinsic structure of the decomposed matrix. In particular, the bases of the null and range spaces are obtained. We have:
+$$ N(A) = V_0$$
+$$ R(A) = U_1$$
+$$ N(A)^\perp = R(A^T) = V_1 $$
+$$ R(A)^\perp = N(A^T) = U_0$$
+
+Moreover, the pseudoinverse provides a simple expression of the projectors in these spaces:
+$$ P_{N(A)} = V_0 V_0^+ = I - A^+ A $$
+$$ P_{R(A)} = U_1 U_1^+ = A A^+ $$
+
+\subsection{Rank, full rankness}
+
+The rank of $A$ can be defined indifferentially as the number of independant row or column vectors. From the SVD, it is clear that row or column definitions are equivalent and corresponds in fact to the number of non null singular values. 
+
+The matrix is full-row rank if its rows form a free family, \mie if its rank is equal to its number of rows: $r=n$. 
+
+The matrix is full-column rank if its columns form a free family, \mie if its rank is equal to its number of columns: $r=m$. 
+
+Abusively, it is said to be full rank when it is full-row rank or full-column rank.
+
+\subsection{Construction from the square} % A+ = (A'A)+ A'
+The pseudo inverse of $A$ respects the following properties:
+\EIN{AAA} A^+  = A^T (AA^T)^+  = (A^TA)^+ A^T \EOUT
+To proove, simply check that both $A^T (AA^T)^+$ and $(A^TA)^+ A^T$ respects the Moore-Penrose conditions. The equality then follows since the pseudoinverse is unique.
+
+\medskip
+When $A$ is full-row rank, $AA^T$ is invertible and therefore its inverse is equal to its pseudoinverse. We have then that:
+$$ A^+ = A^T(AA^T)^{-1} \quad \textrm{[\emph{if and \underline{only} if }} A \textrm{\emph{ is full-row rank}]}$$
+This property gives another constructive property of the pseudoinverse. However, this is not a unconditional definition. The property is very often mistakenly used, while it only holds when $A$ is full-row rank. 
+
+Similarly, when $A$ is full-column rank, we have:
+$$ A^+ = (A^TA)^{-1} A^T  \quad \textrm{[\emph{if and \underline{only} if }} A \textrm{\emph{ is full-column rank}]}$$
+
+In general, only the (non-constructive) property \eq{eq:AAA} holds.
+
+\section{Other generalized inverses}
+
+It is possible to define other generalized inverses of a matrix $A$ that respects only some of the four Moore-Penrose conditions. The properties and characterizations of the matrices respecting any combination of the four rules are described in detail in the reference book [BenIsrael03]. In particular, the so called-weighted inverse only respects the two first properties. We denote by $L \in \mathbb{R}^{n \times n}$ and $R \in \mathbb{R}^{m \times m}$ two symmetric definite positive matrices and by $\sqrt{L}$ and $\sqrt{R}$ their (non-uniquely defined) square-root such that $L=\sqrt{L}^T\sqrt{L}$ and $R=\sqrt{R}^T\sqrt{R}$. 
+
+
+The right-weighted inverse of $A$, denoted by $A^{\#R}$ is defined by:
+$$ A^{\#R} = \sqrt{R}(A\sqrt{R})^+ = RA^T(ARA^T)^+ $$
+The right-weighted inverse verifies the three first rules of Moore-Penrose.  However, in genteral, we do not have the last one but rather:
+$$ A^{\#R} A R = (A^{\#R} A R)^T $$
+Following the notation of [BenIsrael03], it is said a $\{1,2,3\}$ generalized inverse.
+
+The left-weighted inverse of $A$, denoted by $A^{L\#}$ is defined by:
+$$ A^{L\#} = (\sqrt{L}A)^+\sqrt{L} = (A^TLA)^+A^TL $$
+The left inverse respects the rules 1,2 and 4. But, instead of the third rule, we have:
+$$ L A A^{L\#}  = (L A A^{L\#})^T $$
+
+The $L-$left $R-$right weighted inverse of $A$ is defined by:
+$$ A^{L\#R} = \sqrt{R}(\sqrt{L}A\sqrt{R})^+\sqrt{R} $$
+It only respect the two first rules and instead of the two last, we have:
+$$ A^{L\#R} A R = (A^{L\#R} A R)^T $$
+$$ L A A^{L\#R}  = (L A A^{L\#R})^T $$
+
+% TODO: can we proove that all (1,2) inverses are of this kind ?
+
 
 \section{Unconstrained quadratic programing}
+
+One of the major interest of the pseudoinverse is that it provides the solution to the linear least square problem.
+
 \subsection{Definition}
+
+\subsubsection{Quadratic formulation}
+First of all, a quadratic problem of the variable $x\in\mathbb{R}^m$ is defined by:
+$$ \min_{x\in\mathbb{R}^m} \frac{1}{2} x^T H x - g^T x $$
+where $H\in\mathbb{R}^{m\times m}$ is a symmetric matrix and $g\in\mathbb{R}^m$ a vector (the notation stances for $H$ the Hessian, and $g$ the gradient, with respect to the Newton step resolution). The problem does not have any solution if $H$ is non positive (in such a case, any negative Eigen vector can leads to an arbitrarily large negative value). We therefore considere $H$ to be positive. When $H$ is non definite (positive), there is an infinite number of solution along the zero Eigen vectors. In such a case, we are often interested by the least-norm solution $||x||$.
+
+\subsubsection{Linear least square}
+A particular quadratic problem arrises when $H=A^TA$ and $g=A^Tb$. In that case, the problem is rewritten:
+$$ \min_{x\in\mathbb{R}^m} || A x - b || $$
+with $A \in \mathbb{R}{n \times m}$ any rectangular matrix and $b\in\mathbb{R}^n$ any vector. When $A$ is not full-column rank (then $H=A^TA$ is positive non-definite), there exists a infinite number of solutions, called the least-square solutions. Among those solutions, we are interested by the solution of minumum norm, or minimum-norm least-square solution.
+
+
+\subsection{Least-square inverse}
+
+The minimum-norm least square solution $x^*$ is uniquely exists and is given by the pseudoinverse:
+$$ x^* = A^+ b $$
+
+\begin{proof}
+The vector $b$ can be decomposed as $\tilde b = R(A) b$ and  $b^\perp = N(A^T) b$. In that case, the norm can be developped in:
+$$ || A x - b ||^2 = || A x - \tilde{b} - b^\perp ||^2 = || A x - \tilde{b} ||^2 + || b^\perp ||^2 $$
+this $b=\tilde{b}+b^\perp$ and $\tilde{b}^T b^\perp=0$. The right term does not depends on $x$ and the minimization problem can be reformulated by the root problem:
+$$ \underset{x\in\mathbb{R}^m}{\textrm{find}}   A x = b$$
+with $b = \tilde b \in R(A)$. One solution to this problem is evidently given by the pseudoinverse. We then just have to show that the pseudoinverse is the unique minimum-norm solution $x^* = A^+ b$. Suppose that there exist another solution $x$ such that $Ax=b$. Then $A(x-x^*) = 0$, \mie $x-x^* \in N(A)$. Since $x^* \in N(A)^\perp$, we have:
+$$ || x ||^2 = || x-x^*  ||^2 + || x^* ||^2 $$ 
+which is minimum when $x=x^*$.
+\end{proof}
+
+The minimum-norm least-square can be seen has a problem in two levels:
+\begin{enumerate}
+\item Minimize the sum of square of the residual $||Ax-b||$.
+\item Among the set of solution of the first objective, minimize the parameter norm.
+\end{enumerate}
+
 \subsection{Elements of calcul}
-\subsection{Complete orthogonal decomposition}
+
+\subsubsection{From the decomposition}
+
+The pseudoinverse gives the closed-form of the least square solution. Its expression can be reduced using the SVD:
+$$ x^* = V_1 \Sigma^{-1} U_1^T b$$
+The coefficients of the pseudoinverse should not be computed explicitely in practice to avoid unecessary extra computation cost. Indeed, the optimum is compute from the SVD by $x^* = V_1 \Big( \Sigma^{-1} \big( U_1^T b \big) \Big)$.
+
+In this SVD-based writting, the only divisions are those necessary to invert the diagonal $(\sigma_1 .. \sigma_r)$. The computation cost is then mainly in the matrix multiplications ($O(n^2)$) and the decomposition itself. The SVD is computed by a complex 2-stage algorithm that converges toward the exact decomposition but only approximate it in a finite number of steps. Its complexity is in $O(n^3)$, with a large coefficient in place of the $O$ (typically 20). Rather than the SVD, some other decomposition can be used.
+
+\subsubsection{Complete orthogonal decomposition}
+
+A complete orthogonal decomposition (COD) is any decomposition such that:
+$$ A = ULV^T = \BIN U_1 & U_0 \BOUT \BIN L_1 & 0 \\ 0 & 0 \BOUT \BIN V_1 & V_0 \BOUT^T $$
+where $U = \BIN U_1 & U_0 \BOUT$ and $V = \BIN V_1 & V_0 \BOUT$ are orthonormal matrices and $L_1$ is invertible (this last property justifying the ``complete'' adjective). With this definition, the SVD is a COD. Most of the time, COD is used when $L$ is lower triangular.
+
+If the matrix $A$ is full-column rank, then $V=I_n$ and the COD corresponds to the well QR decomposition. If the matrix $A$ is full-row rank, then $U=I_n$ and the COD corresponds to QR of $A^T$ (also called LQ of $A$).
+
+The COD can be computed in two stages, the first one to compute $U$, the second to compute $V$ (or conversly). The first stage is then similar to a rank-reaveling QR decomposition.
+
+\subsubsection{QR decomposition}
+
+The reference book for the algorithmics of matrix decomposition is [Golub96]. The book is a must for implementing any matrix algorithm, in particular QR, COD, SVD or Cholesky. We present quickly here the Givens method to compute the QR. 
+
+The idea of the Givens method is to ``dig'' the upper part of $A$ to introduce zeros, by composing a sequence of elementary eponym rotations.
+A Givens rotation $R_{i,j,\alpha}$ on $\mathbb{R}^m$ is a planar rotation of angle $\alpha$ on the two axis $i$ and $j$ of the canonical basis:
+$$ R_{i,j,\alpha} = \BIN 
+1 & 0      & \dots &              & & & & &  \dots & 0 \\
+0 & \ddots &       &              & & & & & & \vdots \\
+\vdots  &        & 1     &              & & & & & & \\
+  &        &       & \cos(\alpha) &0& \dots  &0&-\sin(\alpha) & & \\
+  &        &       & 0            &1&        & &0 & & \\
+  &        &       & \vdots       & &\ddots  & &\vdots & & \\
+  &        &       & 0            & &        &1&0 & & \\
+  &        &       & \sin(\alpha) &0&\dots   & &\cos(\alpha) & & \\
+  &        &       &              & &        & & &1 \ \ \ \ & 0\\
+\vdots  &        &       &              & &        & & & \ \ \ \ \ \ddots & \vdots \\
+0  &  \dots      &       &              & &        & & \dots& 0 &1  \\
+\BOUT
+$$
+
+Then, for $\alpha = tan^{-1}( \frac{[A]_{i,l}}{[A]_{j,l}}$, the rotation nullifies one elemement of the column $l$ of $A$:
+$$ [R_{i,j,\alpha} A]_{i,l} = 0, \quad  [R_{i,j,\alpha} A]_{j,l} = \sqrt{[A]_{i,l}^2 + [A]_{j,l}^2}$$
+
+The Givens rotations are applied successively to ``dig'' the last columns of $A$ until the diagonal elements, then the second to last column, etc until the second column, where only one element is nullified and that conclude the decomposition:
+$$ 
+\BIN 
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+\quad \rightarrow
+\BIN 
+\times &\times &\times &0  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+\quad \rightarrow
+\BIN 
+\times &\times &\times &0  \\
+\times &\times &\times &0  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+$$
+$$
+\quad \rightarrow
+\BIN 
+\times &\times &\times &0  \\
+\times &\times &\times &0  \\
+\times &\times &\times &0  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+\quad \rightarrow
+\BIN 
+\times &\times &0 &0  \\
+\times &\times &0  &0  \\
+\times &\times &\times &0  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+\quad \rightarrow 
+\BIN 
+\times &0 &0 &0  \\
+\times &\times &0 &0  \\
+\times &\times &\times &0  \\
+\times &\times &\times &\times  \\
+\times &\times &\times &\times  \BOUT
+$$
+
+\subsubsection{After the QR}
+After the left basis $U$ is computed as a sequence of Givens rotation, the same method can be expressed to obtain the right basis $V$. At the end of the two phases of the algorithm, the coefficients of $L_1$ are explicitely expressed, but not those of $U$ nor $V$. It is not necessary to explicitely compute them to obtain the least-square solution. The algorithm is the following:
+\begin{enumerate}
+\item $\beta := U^T b$ :  apply the sequence of left Givens to $b$
+\item $\tilde{b} := \beta_{1:r}$: only keep the upper part of $\beta$, which correspond to the projection in the range of $A$.
+\item $y := L_1 \setminus \tilde{b}$: compute the substitution of $L$ on $\tilde{b}$.
+\item $x^* := V \BIN y \\ 0 \BOUT$: express the obtain solution in the canonical basis.
+\end{enumerate}
+
+Using the same Givens rotations, the matrix $A$ can be ``digged'' up to a bidiagonal form. From this first stage, the SVD can be approximated by iteratively nullifying the bigest non-diagonal elements. The second part of the algorithm typically converges in a $O(n)$ number of iteration to an approximation in the range of the machine precision. The bidiagonal requires more iterations to be obtained than simply the triangular $L_1$. Furthermore, the second stage increases again the cost of the SVD algorithm.
+
+\subsubsection{Algorithmic cost}
+
+The COD requires $O(n^3)$ real multiplications (with typically 9 in factor to the cube). It is the predominant cost. Then, the basis multiplications requires $O(n^2)$ iterations (typically factor $O=4$ of each). The triangle substitution requires $O(r^2)$ (with $O=2$). 
+
+The cost importantly increases if the explicit expression of the bases $U$ or $V$ are required ($O(n^3)$ each) or if the pseudoinverse is explicitely needed. In that case, it corresponds to $n$ substitution and basis multiplication, for an added $O(n^3)$ (with typically $O=6$).
+
+A detailed discussion of the algorithmic cost is proposed in [Golub96]. In general, the carefull engenieer would take care to which elements are really needed in his computations before asking its value.
+
 \subsection{Regularization}
+
+The Tikhonov regularized least-square problem is:
+$$ \min_{x\in\mathcal{R}^m} ||A x - b ||^2 + \eta^2 ||x||^2 $$
+where $\eta\in\mathbb{R}^+$ is the regularization or damping parameter. When $\eta$ is null, we obtain the classical least-square problem. On the opposite, the solution $x^*$ tends toward 0 when $\eta$ goes to infinity. The parameter adjust the relative precision of the solution to the classical least square problem with respect to a penalization of the large values of $x$.
+
+The solution to this problem is obtained by writting the pseudoinverse of $A_\eta = \BIN A \\ \eta I_n \BOUT$, or, using the property $A_\eta^+ = (A_\eta^TA_\eta)^+A_\eta^T$, we have:
+$$ x^* = (A^T A + \eta^2 I_n )^+ A^T b $$
+The obtained matrix is called the regularized (or damped) inverse of $A$ and denoted by:
+$$ A^{\dagger \eta} \triangleq (A^T A + \eta^2 I_n )^+ A^T $$
+
+Using the SVD of $A$, it is easy to show that the regularized inverse is equal to:
+$$ A^{\dagger \eta} = V_1 \Sigma^{\dagger \eta} U_1^T $$
+where the coefficients $\sigma_i^{\dagger \eta}$ of $\Sigma^{\dagger \eta}$ are given by:
+$$\sigma_i^{\dagger \eta} \triangleq \frac{\sigma_i}{\sigma_i^2 + \eta^2}$$
+
+The $\sigma_i^{\dagger \eta}$ tends toward the $\sigma_i^+ \triangleq \frac{1}{\sigma_i}$ when $\eta$ tends toward 0, which proves that the regularized inverse tends toward the pseudoinverse when the regularization is arbitrarily small.
+
+One interesting aspect of the regularized least-square problem is that its minimum is always unique.
+
+The regularized problem is often prefered to the classical one when small singular values can be expected. In particular, this problem corresponds to the one iteratively solved in the Levenberg-Marquardt algorithm.
+
 
 % ##############################################################################
 \chapter{Resolution of the inverse-kinematics problem}
@@ -787,7 +1166,207 @@ Center of mass, relative placement, visual servoing
 % ##############################################################################
 \part{Inverse dynamics}
 
-\chapter{Velocities and forces}
+\chapter{Overview by Andrea Del Prete}
+
+\section{Motivations}
+
+What is better in inverse dynamics:
+\begin{itemize}
+\item  dynamics is a better model: the robot is better modeled as a force source than as a velocity source.
+\item Rigid contact: no control on the contact force by controling the velocity
+\item Friendly robotics: the robot is never exerting a large force 
+\end{itemize}
+
+\section{Task function}
+
+We consider a function of the robot configuration, namely $x$:
+$$ x = f(q) $$
+The function $f$ could also depends on the robot velocity or other state components. We keep $q$ for simplicity. We want to impose a certain behavior on the function output. 
+
+\section{Forward model}
+Inverse kinematics: the basic model is.
+$$ \dot x = J(q) \dot q$$
+The control is $\dot q$.
+
+Inverse dynamics: we need to find a relation between the robot torques $\tau$ and the objectives. Typically, knowing $\tau$, what is $\ddot q$ then what is the task acceleration $\ddot x$.
+$$\tau \rightarrow \ddot q \rightarrow \ddot x $$
+
+\subsection{Robot dynamics overview}
+The dynamic equation is 
+$$ M(q) \ddot q + C(q,\dot q)\dot q + g(q) = \tau $$ where $M(q)$ is called the
+mass matrix, $C(q,\dot q) \dot q$ are the Coriolis and centrifugal effects and
+$g(q)$ is the gravity force. This states the relation between $\tau$ and $\ddot
+q$, the terms in $q$ and $\dot q$ being the state of the robot.
+
+The forward dynamics is: being given $q,\dot q$ and $\tau$, what is the resulting $\ddot q$. This typically what dynamics engines of simulators do:
+$$ FWD: q,\dot q,\tau \rightarrow \ddot q$$
+The inverse dynamics is: being given $q,\dot q,\ddot q$, what is the necessary $\tau$ to achieve this acceleration. This is typically what robot control does:
+$$ INV: q,\dot q,\ddot q \rightarrow \tau$$
+
+[Say a word about invertibility?]
+
+\subsection{Deriviation}
+Most naive way of deriving: coming from Newton law: $F = m \ddot x$, on each rigid body of the robot taken separately. The problem is that we will have also to find the constraint forces, i.e. the constraints that prevent the joint constraints from being violated.
+
+Lagrange approach. First define the Lagragian:
+$$L(q,\dot q) = T(q,\dot q) - U(q)$$
+where $T(.,.)$ is the kinetic energy, and $U(.)$ is the potential energy. The Lagrangian respects:
+\EIN{lagrangian}\frac{d}{dt} \dpartial{L(q,\dot q)}{\dot q} - \dpartial{L(q,\dot q)}{q} = \tau
+\EOUT
+If taking a free body (in SE(3)), this last equation boils down to standard Newton $F= m \ddot x$. This is to give the intuition behind the equation, without proof.
+
+\subsubsection{Kinetic energy}
+Let's now derive $T$ and $U$. The kinematic energy $T_i$ of one link $i$ is:
+$$T_i(q,\dot q) = \frac{1}{2} m_i \dot x_i^2 + \frac{1}{2} w_i^T I_i w_i$$
+where $m_i$ is the mass of the link, $I_i \in \mathbb{R}^{3\times 3}$ its inertia, $\dot x_i$ is linear velocity and $w_i$ its angular velocity. We can rewrite it spatially by:
+$$T_i(q,\dot q) = \frac{1}{2} \nu_i^T M_i \nu_i$$
+with $\nu_i$ is the kinematics twist, and $M_i$ is a $6 \times 6$ matrix deduced from $m_i$ and $I_i$. 
+
+The total system energy is the sum of the $T_i$ over all the bodies:
+$$ T(q,\dot q) = \sum_{i=1}^n \frac{1}{2} \nu_i^T M_i \nu_i $$
+This comes down to the simple form:
+$$ T(q,\dot q) = \frac{1}{2} \qdot^T M \qdot $$
+where the generalized inertia matrix is: 
+$$M =  \sum_{i=1}^n  J_i^T M_i J_i $$
+using the fact that $\nu_i = J_i \qdot$. $M$ is positive definite, which is important in the following.
+
+\subsubsection{Potential energy}
+The potential energy of one body is:
+$$U_i(q) = m_i g h_i(q)$$
+The total potential energy of the system is then:
+$$ U(q) = \sum_{i=1}^n  m_i g h_i(q)$$
+
+\subsubsection{Energy derivation}
+$$ \dpartial{T(q,\qdot)}{\qdot} = M(q) \qdot$$
+$$ \frac{d}{dt} \dpartial{T(q,\qdot)}{\qdot} = M(q) \qddot + \dot{M}(q) \qdot$$
+
+$$\dpartial{T}{q} = \frac{1/2} \qdot^T \dpartial{M}{q}(q) \qdot$$
+where $dpartial{M}{q}$ is a tensor (3D matrix), no detail given yet about the tensor/vector product.
+
+The Lagrangian derivatives \eq{eq:lagrangian} can finally be rewritten:
+$$ M(q) \qddot + (\dot{M}(q) -  \frac{1}{2} \qdot^2 \dpartial{M}{q}) \qdot + \dpartial{U}{q} = \tau$$
+We find the correspondance with: $C(q,\qdot) = \dot{M}(q) -  \frac{1}{2} \qdot^2 \dpartial{M}{q}$ and $g(q) = \dpartial{U}{q}$. In the following, we denote by $h(q,\qdot) = C(q,\qdot) \qdot+ g(q)$ the dynamic affine term.
+
+\section{Inverse dynamics control}
+
+\subsection{First control law: computed torque}
+
+We denote by $\tau^*$ the control law (the $^*$ makes explicit the fact that this is an imposed quantity). The computed torque is simply:
+$$\tau^* = M \qddot^* + h$$
+The desired acceleration is set to:
+$$\qddot^* = \qddot^d - K_p (q - q^d) - K_v (\dot q - \dot q^d)$$
+
+The dynamics of the close-loop system is obtained by putting the $\tau^*$ form into the dynamics equation, which trivially leads to:
+$$ \qddot = \qddot^d - K_p e - K_v \dot e$$
+where $e = q-q^d$. We then have the differential second-order linear equation:
+$$\ddot e + K_v \dot e + K_p e = 0$$
+which brings the error to 0 as soon as $K_p$ and $K_v$ are positive.
+
+\subsection{Quadratic program}
+
+The computed torque is trivially obtained from the following QP:
+$$  \tau^* = \min_{\tau \in \mathbb{R}^n} || \qddot - \qddot^* || $$
+$$ \textrm{so that} \quad M \qddot + h = \tau $$
+
+For a ``simple'' objectives such as tracking $\qddot^*||$, the QP is a trivial formulation, but much more flexible for more complex cases like we will see below.
+
+\section{Mobile robot in contact}
+
+\subsection{Case of the underactuation}
+
+We consider the case of a free floating robot. The configuration of the robot will then comprehend 6 DOF that represent the position of the robot base. The robot configuration is then explicitly distinguished:
+$$ q = \BIN x_b \\ q_a \BOUT $$
+where $q_a$ are the actuated joints (they have motors, you can directly control them) and $x_b$ is a representation of the robot basis, typically using a representation of $SE(3)$. The robot dynamic equation is then:
+$$ M \qddot + h = \BIN 0 \\ \tau \BOUT = S^T \tau$$
+where $S = \BIN 0_6 \\ I_n \BOUT$ is the selection matrix (so that $S q = q_a$).
+
+\subsection{Contact forces}
+If the system is in contact with the environment, then the contact forces are acting on the system and should be considered in the Lagrangian. The contact forces are exerting an equivalent torque at the joint level, given by:
+$$ \tau_{c} = J_c^T f_c$$
+where $f_c$ are the Cartesian contact forces (i.e. the force exerted on the contact body, in whatever representation you line) and $J_c$ is the Jacobian of the contact points where the forces are exerted. Let us prove that. The principle of D'Alembert (virtual work) states that the power of the contact force (Cartesian contact force times the displacement) is equal to the total power (joint torque times the configuration displacement:
+$$f^T \delta x = \tau^T \delta q$$
+where $\delta x$ is the Cartesian displacement at the contact point and $\delta q$ is the configuration displacement. Since $\delta x= J \delta q$ we have for any $\delta q$:
+$$\delta q^T \tau = \delta q^T J^T f$$
+By identification, this prooves that $\tau = J^T f$.
+%
+The dynamic equation is then:
+$$ M \qddot + h = S^T \tau + J_c^T f_c$$
+The contact force $f_c$ enters as a new variable that should be found when searching for the motor torques. 
+
+Example of forces: 
+\begin{itemize}
+\item point contact: f is dim 3
+\item planar contact: you can exert 3 forces and three torques, f is dimension 6.
+\item several contacts: just stack the forces for each bodies in contact.
+\end{itemize}
+[There is some work to do here about duality?]
+
+\section{Operational space inverse dynamics (OSID)}
+
+\subsection{Task-space acceleration}
+
+The task kinematics is:
+$$\dot x = J \qdot$$
+Derivating this relation with respect to time:
+$$ \ddot x = J \qddot + \dot J \qdot$$
+
+Classical case: moving $x$ from a starting point $x^0$ to a reference target $x^\infty$. If assuming that a reference trajectory $x^d(t)$ is given from $x^0$ to $x^\infty$ (with its time derivatives $\dot x^d, \ddot x^d$). The imposed Cartesian acceleration should be:
+$$ \ddot x^* = \ddot x^d - K_p(x-x^d) - K_v (\dot x - \dot x^d) $$
+Like for the proportional-derivative on $q$, the $x$ acceleration is composed of two part: a feedforward $\ddot x^d$ and a feedback $K_p+K_v$. The feedforward is not sufficient in practice, as modeling and actuation errors prevent a perfect application of the feedforward. The feedback makes the control robust.
+
+\subsection{OSID problem}
+
+The problem of finding $\tau$ that meets at best the imposed task acceleration is then written:
+$$ \min_{\tau \in \mathbb{R}^n} || J \qddot + \dot J \qdot - \ddot x^* ||^2$$
+$$ \textrm{so that} M \qddot + h = S^T \tau$$
+This is a constrained quadratic problem.
+
+\subsection{Constrained quadratic problem}
+
+Let us consider the generic linearly-constrained linear least-square problem (LCLLSP):
+\EIN{LCLLSP} \min_{y \in \mathbb{R}^n} || A y - b ||^2 \EOUT
+$$ \textrm{so that} C y = d$$
+We assume that the constraint is feasible, that is to say $d$ is in the range of $C$ (which is typically the case in the simpler case when $C$ is full row rank). This is a reasonible assumption, as an unfeasible constraint means that the LCLLSP as no solution.
+
+The space of all $y$ that satisfy the constraint can be described using the null space of $C$; it is the set of $\bar y$ of the form:
+$$ \bar y = C^+ d + Z^T z$$
+where $Z$ is a basis of the null space of $C$, that can be obtained from the SVD as $Z=V_0$ using:
+$$ C = \BIN U_1 & U_0 \BOUT \BIN \Sigma & 0 \\ 0 & 0 \BOUT \BIN V_1 & V_0 \BOUT^T$$
+It is straight forward to check that any $\bar y$ of this form respect the constraint ($C\bar y= CC^+ d + CZz = d + 0$ since $CC^+d=d$ by assumption of $d$ being in the range of $C$ and $CZ=0$  by definition of $Z$). The LCLLSP is then reduced to a unconstrained LLSP:
+$$ \min_{z \in \mathbb{R}^{m-r}} || AZz - (b - AC^+ d) ||^2 $$
+whose solution is directly obtained using the pseudoinverse of $AZ$, leading finally to the least-norm solution of \eq{eq:LCLLSP}:
+$$ y^* = C^+d + Z(AZ)^+ ( b - AC^+d)$$
+
+[Proof of norm minimality of $y^*$ ?]
+
+[Explanation of the cascade... introducing the null space of $AZ$]
+
+\subsection{OSID with contact}
+
+The previous section directly gives the optimum of the OSID problem. Let us now consider the resolution of the OSID in case of contact. We now have three variables: $\tau, \qddot$ and $f_c$. In addition to the dynamics constraint, we also have the constraint that the robot movements should correspond to the contact model. Typically, a rigid contact model imposes no motion of the contact point (therefore decoupling the force from the motion). This is written $x_c(q) = x_c^0$ where $x_c^0$ is a constant position. The constraint is written in terms of $\qddot$ by derivating it twice with respect to time:
+$$ J_c \qddot + \dot J_c \qdot = 0$$
+The OSID with contact finally can be written as the following LCLLSP:
+\EIN{OSIDf} \min_{\tau \in \mathbb{R}^n} || J \qddot + \dot J \qdot - \ddot x^* ||^2 \EOUT
+$$ \textrm{so that} M \qddot + h = S^T \tau + J_c^T f_c$$
+$$ \quad J_c \qddot + \dot J_c \qdot = 0$$
+This is written under the form \eq{eq:LCLLSP} by setting:
+$$ y = (\qddot, f, \tau)$$
+$$ A = \BIN J & 0 & 0 \BOUT$$
+$$ b = \ddot x^* - \dot J \qdot$$
+$$ C = \BIN  M & -J_c^T & -S^T \\ J_c & 0 & 0 \BOUT$$
+$$ d = (-h, -\dot J_c qdot)$$
+
+Using variations of $A$, it is also possible to express objectives in terms of contact forces (for ex, applying a given reference force when cleaning the board).
+
+\subsection{Elements of computations}
+
+The typical control frequency when imposing torques is 1kHz, which means that the control should be solved in 1ms. The typical dimension of the OSID problem with contact is: 2n+k+6 variables (n the number of joints, k the number of contact); n+6+k constraints. For a standard humanoid, n=30, k=20 (i.e. 86 variables, 50 constraints), which is too high for a brut force resolution of \eq{eq:OSIDf} in real time.
+
+A computational reduction is achieved by exploiting the sparsity of the problem. This can be done at no implementation cost by using our knowledge of the specific form of the problem, coming from the dynamics. We split all the quantities in the configuration space between the non-actuated floating base (indexed by $u$) and the actuated DOF (indexed by $a$):
+$$ M = \BIN M_u \\ M_a \BOUT, $$
+
+
+\chapter{Geometry of forces and accelerations}
 
 \chapter{The dynamic equation of a multi-body system}
 
@@ -795,19 +1374,176 @@ Center of mass, relative placement, visual servoing
 
 \chapter{Operational-space inverse dynamics}
 
-\chapter{Synthesis: a overview of constrained optimization}
+\chapter{Synthesis: an overview of constrained optimization}
 
 % ##############################################################################
 % ##############################################################################
 % ##############################################################################
 \part{Optimal control}
 
-\chapter{Inifinite-space optimization}
+%% \chapter{Inifinite-space optimization}
+%% \chapter{Discretization and static optimization}
+%% \chapter{Linear-quadratic resolution}
 
-\chapter{Discretization and static optimization}
+In the three first parts, we have only considered instantaneous approximation of the problem. In Part 1, we have only considered the static problem of finding one configuration satisfying a set of constraints. In the second part, we have shown that the pseudo-path obtained by integrating the search for the optimal configuration can be viewed as a trajectory joining an initial configuration to its optimum. However, we did not really select this trajectory and it is very unlikely that the resulting one is optimizing any interesting criteria. In Part 3, we have considered the robot dynamics, which is closely related to the notion of trajectory. However, once more, we only looked at the instantaneous linearization of the dynamics and obtained a trajectory by integration of the instantaneous control. 
 
-\chapter{Linear-quadratic resolution}
+In this part, we now consider directly the trajectory of the system and work on its properties to obtain an optimal movement form the start point to the end point. The trajectory is a function of time in the space of both control and states. It is then evolving in a space of infinite dimension. Finding a minimum over a functional, that is to say a function of functions, can be viewed as a generalization of the problem of minimization over a finite-dimension vector space. It is called calculus of variation. In our case, the state and control trajectories are linked by the dynamics, which is formulated as a ordinary differential equation of control. The corresponding problem is called optimal control, that is to say the minimization over a functional of the state and control trajectories constrained by the control differential equation. In the ``good'' cases, it can be viewed as a special case of the calculus of variation. In many cases (even not so difficult), the optimal-control class of problem goes beyond calculus of variation.
 
+In a first time, we make a brief overview of the optimal-control formulation and theoretical results. On a numerical point of view, the actual optimal-control problems are very often too difficult to be solved using this results. In these cases, we then approximate the problem by considering a finite-dimension basis of function for the state and the control (for example time discretization) and rely on finite-dimension optimization to find the best approximation to the initial problem. This so-called ``direct'' approach is the subject of the second chapter of this part.
+
+
+% ##############################################################################
+\chapter{Problem formulation and properties}
+
+In this part, we give an overview of the theoretical results of the optimal-control field. The content of this chapter would very well be the topic of a 25-hour class and 250-pages book. The idea here is to provide a brief introduction and an insight of what would be the alternatives to a direct resolution. We first formulate the problem, then gives to related formulation to provide an insight of the difficulty of the optimal-control class. The main results are formulated without proofs in the third section. They enable the formulation of the indirect resolution methods, that we briefly describe and discuss.
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Definition of the problem}
+
+\subsection{Robot dynamics}
+
+Up to now, we only describe the robot by its current configuration. If we consider for example the control to be the joint torques, as in the previous part, the robot configuration is certainly not enough to describe the current state of the robot and the action of the torque control on it: the joint velocities are missing and should be considered in the state. In that case, the joint acceleration are not part of the state since infinitely many acceleration are instantaneously possible when chosing the torque control. More precisely, at a given time $t$ and for a known configuration and velocity, it is not possible to know the acceleration until the torque controls are chosen. 
+
+More generally, the state is chosen with respect to the control in order to uniquely define the effect of the first on the second. The dynamics is then given as a very abstract ordinary differential equation linking the state. Denoting by $x(t)$ the state and by $u(t)$ the control at time $t$, the dynamics equation is written:
+$$ \dot x(t) = f(x(t),u(t)) $$
+We only consider here for simplicity autonomous dynamics, \mie that are not explicitely function of time. The same results are obtained with time-varying dynamics, where the time partial derivative of $f$ acts as a drift to be compensated. This case is not so frequent in robotics.
+
+The choice of $x$ and $u$, and the consequent dynamics $f$ are the modeling choice of the programmer. One can for example consider the simple dynamics:
+$$ x = q, \quad \dot x = \dot q, \quad f: x,u \rightarrow u$$
+This dynamics in fact only consider the kinematics of the system, and not what we called dynamics in the previous part (the robot inertia, forces and acceleration).
+
+The dynamics of the previous part is:
+$$ x = (q,\dot q), \quad u = \tau, \quad f: x,u \rightarrow \BIN \dot q \\ M(q)^{-1} (b(q,\dot q) - \tau) \BOUT$$
+with $M$ the robot generalized inertia matrix, $b$ the dynamics drift vector and $\tau$ the joint torques.
+
+In this last equation, we do not consider the actuator dynamics, since the control is directly at the joint output level. The motor dynamics can be added. For example, a direct-current electrical motor would be control for example in current, which does not significantly complexify the dynamics model. Depending on the level of modeling, the motor temperature might be added to the state and affect the motor behavior. An air cylinder would be controled by the electrical current opening the servo-valve that makes the air flow enter in the tube, changing the pressure and producing torque. In that case, the state as to be increased to render the air flow state, which increases the degree of the differential equation. 
+
+\subsection{Cost functionnal}
+
+The cost is defined as a general functionnal over both the control and the state time-dependant functions. In order to make explicit that a functionnal manipulates a function of the time, and not one instance at a fixed time, we emphasize the notation of $x$ and $u$, defining the functional by:
+$$ g: \traj{x},\traj{u} \rightarrow g(\traj{x},\traj{u})$$
+The emphase is ommited when the function nature of $x$ and $u$ are evident, for example in denoting $x(t)$.
+Very often, it is reduced to the following form:
+$$ g(\traj{x},\traj{u}) = c(x(t_f)|t_f) + \int_0^{t_f} c(x(t),u(t)|t) dt $$
+where $t_f \in \overline{\mathbb{R}}^+$ is the terminal time, $c(.|t_f)$ is the terminal cost and $c(.,.|t)$ is the running (or integral) cost. The terminal cost can be free (\mie a variable of the problem) or fixed, infinite (in such a case, $c(.|t_f)$ is null) or bounded. In the following, we will only consider  fixed finite terminal time, for simplicity. The same properties can be adapted for the other cases.
+
+This form of the cost functionnal is named the Lagrange-Mayer form. Two other forms are very often considered. The Lagrange form only consider the integral term:
+$$ g(\traj{x},\traj{u}) = \int_0^{t_f} c(x(t),u(t)|t) dt $$
+The Mayer form only consider the terminal term:
+$$ g(\traj{x},\traj{u}) = c(x(t_f)|t_f)$$
+Theoretically, these three forms are strictly equivalent, as any problem in one of them can be reformulated under the other forms. For example, it is possible to pass from the the Lagrange-Mayer to the Mayer by considering an additional variable $x^0$ subject to the dynamics $\dot x^0(t) = c(x(t),u(t)$ and setting the complete dynamics to be $\tilde{\traj x} = (\traj x,\traj{x}^0)$ and $\tilde f = (f,c)$. The Mayer cost is then $\tilde g(\tilde{\traj x},\tilde{\traj u}) = c(x(T)) + x^0(T)$. This equivalence also emphasize the symmetry between the running cost and the dynamics functions.
+
+\subsection{Optimal control formulation}
+
+In the following, we will consider the optimal control problem of the Lagrange-Mayer form:
+\EIN{oc_cost} \min_{\traj x,\traj u} c(x(t_f)) + \int_0^{t_f} c(x(s),u(s)) ds
+\EOUT
+\EIN{oc_dyn} s.t. \quad \dot x(t) = f(x(t),u(t) \EOUT
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Trajectory optimization: Boundary-value problem}
+
+\subsection{Problem formulation}
+\subsection{Shooting resolution}
+\subsection{Numerical integration methods}
+\subsection{Multiple-shooting resolution}
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Infinite-dimension optimization: calculus of variation }
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Optimality conditions}
+
+The optimal-control problem can be seen as an unconstrained minimization only over the $\traj u$ trajectory, as $\traj x$ is then uniquely defined by the integration of the dynamics. We denotes this functional by:
+$$ J(\traj u|x_0) = c(x(t_f) + \int_0^{t_f} c(x(s),u(s)) ds $$
+We abusively use the same notation to denote the partial cost:
+$$ J(\traj u|x_t,t) = c(x(t_f) + \int_t^{t_f} c(x(s),u(s)) ds $$
+The functionnal depends on the initial point $x_t$ and of the starting time $t$. Here $x_t$ is a fixed state (finite dimension) while $\traj u: [t,t_f] \rightarrow \mathcal{U}$ is a time-dependent function. 
+
+
+\subsection{Bellman principle}
+
+The Bellman optimality principle simply states that, for any trajectory $\traj u$ minizing $J(\traj u|x,0)$, a subtrajectory of $\traj u$ starting at $t$ minimizes $J(.|x(t),t)$. To write this principle explicitely, we define the optimum of $J$ to be the value function $V$:
+$$V^*(x,t) = \min_{u_{[t,t_f]}} J(u|x,t)$$
+We then have of course:
+$$ V^*(x,t_f) = c(x)$$
+
+The Bellman principle is written as a recursive definition of $V^*$:
+$$V^*(x,t) = \min_{u_{[t,t+\Delta t]}} \left\{ \int_t^{t+\Delta t} c(x(s),u(s)) ds + V^*(x(t+\Delta t),t+\Delta t) \right\}$$
+
+The value function is a complete solution of the optimal-control problem that directly gives the optimal trajectories starting from any point of the space. It is not possible to express it in general, neither to compute it numerically.
+
+
+
+\subsection{Equation of Hamilton-Jacobi-Bellman}
+
+The Bellman optimality principle can be perceived as an optimal dynamics for the system. In particular, assuming that it is possible to obtain the first order Taylor development of $V^*$:
+$$V^*(x(t+\Delta t),t+\Delta t) = V^*(x(t),t) + V_t^*(x(t),t) \Delta t + V_x^*(x(t),t) f(x(t),u(t)) \Delta t + o(\Delta t^2)$$
+where we denote with indexes the partial derivatives:
+$$ V_t^* \triangleq \dpartial{V^*}{t} $$
+$$ V_x^* \triangleq \dpartial{V^*}{x} $$
+
+The development can be propagated through the Bellman equation. For a small $\Delta t$, the integral becomes trivial. We then have
+\begin{align*}
+ V^*(x(t),t) = \min{ u_{[t,t+\Delta t]}} \Big\{ & c(x(t),u(t)) \Delta t + V^*(x(t),t) + 
+V_t^*(x(t),t) \Delta t \\ &+ V_x^*(x(t),t) f(x(t),u(t)) \Delta t \Big\}
+\end{align*}
+Finally, we can take out of the $\min$ operator the terms not depending of $u$ and obtained the following partial derivative equation:
+$$ V_t(x(t),t) = \max_{u(t) \in \mathcal{U}} \Big\{ - c(x(t),u(t))  - V_x^*(x(t),t) f(x(t),u(t)) \Big\} $$
+
+We define the system Hamiltonian $H$ to be:
+$$H(x(t),u(t),p) = <p | f(x(t),u(t))> - c(x(t),u(t)$$
+for any vector $p \in \mathcal{X}$\footnote{We will see late $p$ as the costate, living in the dual of the state space. This notation in $p \in \mathcal{X}$ is then strictly-speaking abusive.}. The differential equation is then reformulated with the Hamiltonian as:
+$$ V_t(x(t),t) = \max_{u(t) \in \mathcal{U}} \Big\{ H(x(t),u(t),-V_x(x(t))) \Big\} $$
+
+The choice of have a max on $-V_x$ or a min on $V_x$ is arbitrary. We chose this convention to follow Pontryagin point of view of the trajectory optimality as a maximum.
+
+This differential equation is called Hamilton-Jacobi-Bellman equation. It provides a very powerful result, that is a necessary but also a sufficient condition of optimality (we only here roughly derivated the necessary side). In general the HJB equation is very difficult to solve or integrate. When it is possible, it results in the value function, which gives all the solutions of the system.
+
+The optimal control corresponds to the argmax of the HJB equation:
+$$ u^*(t) = \textrm{arg}\max_{u(t) \in \mathcal{U}} \Big\{ H(x(t),u(t),-V_x(x(t))) \Big\} $$
+
+\subsection{Pontryagin Maximum Principle}
+
+The HJB equation is somehow too powerful. First, it does not hold for some classes of systems. In particular, we have used the calculus-of-variation point of view to obtain it, using a limited development of the value function that does not necessarily exists. For more general classes of system, the condition of optimality is given by the Pontryagin maximum principle.
+
+\begin{theorem}[Weak Maximum principle]
+Let $\traj u^* : [0,t_f] \rightarrow \mathcal U$ be the global optimum of \eq{eq:oc_cost} subject to the dynamics \eq{eq:oc_dyn}, and $\traj x^* : [0,t_f] \rightarrow \mathcal X$ the corresponding trajectory. Then there exists a costate trajectory $\traj p^* : [0,t_f] \rightarrow \mathcal X$ such that:
+$$ \dot x^* = H_p (x^*,u^*,p^*) $$ 
+$$ \dot p^* = - H_x (x^*,u^*,p^*) $$ 
+Then, for any $t \in [0,t_f]$, the control maximize the Hamiltonian:
+$$ u^*(t) = \max_{u \in \mathcal{U} } H(x^*(t),u,p^*(t))$$
+\end{theorem}
+
+This is a weak formulation of the PMP, as it does not consider any constraints on the control nor state trajectories, nor any terminal conditions. The weak PMP is not too difficult to demonstate. The complete PMP is much more difficult. The interested reader is referred to Pontryagin book or to [Liberzon03].
+
+\subsection{Discussion}
+HJB states that the control can be computed as:
+$$ u^*(t) = \textrm{arg}\max_{u(t) \in \mathcal{U}} \Big\{ H(x^*(t),u(t),-V_x(x(t))) \Big\} $$
+On the other hand, PMP states a similar equation including $p^*$:
+$$ u^*(t) = \textrm{arg}\max_{u(t) \in \mathcal{U}} \Big\{ H(x^*(t),u(t),p^*(t))) \Big\} $$
+
+The two principles are then very similar. However, assuming that we are able to compute the value function $V^*$, the HJB provides also a feedback formulation, that is to say 
+
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Indirect methods}
+
+
+% ##############################################################################
+\chapter{Direct resolution}
+
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Discretization and non-linear finite-dimension optimization}
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Explicit versus implict formulation}
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Direct multiple shooting}
+% #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+\section{Linear-quadratic optimization}
+\subsection{Gauss-Newton hypothesis}
+
+% ##############################################################################
 \chapter{The example of the robot walk}
 
 
